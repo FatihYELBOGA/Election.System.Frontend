@@ -9,10 +9,10 @@ function Home(){
     const [postList,setPostList] = useState([]);
 
     const refreshPosts = () => {
-        fetch("http://localhost:7015/announcements")
+        fetch("http://fatihyelboga-001-site1.atempurl.com/announcements")
         .then(res =>{
-            console.log(res);
-            res.json()} )
+            res.json();
+        } )
         .then(
             (result) => {
                 setIsLoaded(true);

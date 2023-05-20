@@ -11,22 +11,38 @@ import { useState } from 'react';
 
 function App() 
 {
-  const[userId, setUserId] = useState(31);
+  const[userId, setUserId] = useState(0);
+  if(userId === 0){
+    return(
+      <div className='App'>
+        <BrowserRouter>
+          <Routes>
+          <Route exact path='/login' element={<Login userId={userId} setUserId={setUserId} />} />
+          </Routes>
+        </BrowserRouter>
 
-  return (
-    <div className="App">
-      <BrowserRouter>
-        <NavBar></NavBar>
-        <Routes>
-          <Route exact path='/' element={<Login userId={userId} setUserId={setUserId} />}/>
-          <Route exact path='/home' element={<Home/>}/>
-          <Route exact path='/voting' element={<Vote/>}/>
-          <Route exact path='/candidacy-application' element={<Candidacy/>}/>
-          <Route exact path='/profile' element={<Profile/>}/>
-        </Routes>
-      </BrowserRouter>
-    </div>
-  );
+      </div>
+    );
+
+  }else{
+    return (
+      <div className="App">
+        
+        <BrowserRouter>
+          <NavBar></NavBar>
+          <Routes>
+            
+            <Route exact path='/home' element={<Home/>}/>
+            <Route exact path='/voting' element={<Vote/>}/>
+            <Route exact path='/candidacy-application' element={<Candidacy/>}/>
+            <Route exact path='/profile' element={<Profile/>}/>
+          </Routes>
+        </BrowserRouter>
+      </div>
+    );
+
+  }
+  
 }
 
 export default App;

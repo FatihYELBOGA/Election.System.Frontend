@@ -11,7 +11,7 @@ function App() {
       <NavBar></NavBar>
       <Routes>
         <Route exact path='/' element={<Home/>}/>
-        <Route exact path='/voting' element={<Vote/>}/>
+        
       </Routes>
       
       </BrowserRouter>

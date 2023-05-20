@@ -8,13 +8,26 @@ import Img from '../../iyte_logo.jpg'
 
 
 function Announcement(props){
-    const {announcementId, title, description} = props; 
-
+    const {announcementId, title, description} = props;
     return (
-      <div>
-        <h1>{title}</h1>
-        <h2>{description}</h2>
-      </div>
+        <Card sx={{ width: 700 , marginTop: 15}}>
+          <CardActionArea>
+            <CardMedia
+              component="img"
+              height="140"
+              image={Img}
+              alt="green iguana"
+            />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div">
+                {title}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {description}
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+        </Card>
       );
 
 }

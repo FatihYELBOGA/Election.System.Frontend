@@ -1,6 +1,8 @@
 import React ,{useState,useEffect} from "react";
 import Announcement from "../Announcement/Announcement";
-
+import './Home.css'
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 function Home(){
 
@@ -10,9 +12,8 @@ function Home(){
 
     const refreshPosts = () => {
         fetch("http://fatihyelboga-001-site1.atempurl.com/announcements")
-        .then(res =>{
-            res.json();
-        } )
+        .then((res) =>
+            res.json() )
         .then(
             (result) => {
                 setIsLoaded(true);
@@ -37,19 +38,23 @@ function Home(){
     if(error){
         return <div>Error!!</div>
     }else if(!isLoaded){
-        return <div>Loading...</div>
+        return (
+            <Box sx={{ display: 'flex' ,textAlign: 'center',justifyContent:'center'}}>
+              <CircularProgress />
+            </Box>
+          );
     }else{
         return (
+        <div className="container">
+            <div fixed="true" className="announcement">
             
-        <div fixed="true" className="container">
-            
-             {postList.map((announcement) => (
-                <div key={announcement.id}>
-                    <Announcement announcementId={announcement.id} title={announcement.title} description={announcement.description} ></Announcement> 
-                </div>
-                           
-            ) )}
-      </div>
+            {postList.map((announcement) => (
+               <Announcement key={announcement.id} announcementId={announcement.id} title={announcement.title} description={announcement.description}></Announcement>
+            ))}
+     </div>
+
+        </div>  
+        
                 
       
         );

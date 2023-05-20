@@ -1,0 +1,10 @@
+.container{
+    display: flex !important;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items:baseline;
+    height: 100vh;
+    background-color: aliceblue;
+    
+    
+}

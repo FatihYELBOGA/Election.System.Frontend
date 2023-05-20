@@ -40,9 +40,9 @@ function NavBar() {
     <AppBar position="static" sx={{backgroundColor: "#B61815", height:100}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Box className='logo' sx={{}}>
+          <Box className='logo' sx={{marginTop: 2}}>
             <img src={Img} alt='IYTE Logo' width='100' height='75'></img>
-            <space >IYTE</space>
+            
           </Box>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>

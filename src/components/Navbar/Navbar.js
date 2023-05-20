@@ -17,7 +17,8 @@ import './Navbar.css'
 
 const settings = ['Profile', 'Logout'];
 
-function NavBar() {
+function NavBar() 
+{
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -42,7 +43,6 @@ function NavBar() {
         <Toolbar disableGutters>
           <Box className='logo' sx={{marginTop: 2}}>
             <img src={Img} alt='IYTE Logo' width='100' height='75'></img>
-            
           </Box>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -56,6 +56,7 @@ function NavBar() {
             >
               <MenuIcon />
             </IconButton>
+
             <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
@@ -74,23 +75,21 @@ function NavBar() {
                 display: { xs: 'block', md: 'none' }, 
               }}
             >
-              
-                <MenuItem onClick={handleCloseNavMenu} >
-                  <Typography textAlign="center"  >Home</Typography>
-                </MenuItem>
-                <MenuItem onClick={handleCloseNavMenu} >
-                  <Typography textAlign="center"  >Voting</Typography>
-                </MenuItem>
-                <MenuItem onClick={handleCloseNavMenu} >
-                  <Typography textAlign="center"  >Candidancy Application</Typography>
-                </MenuItem>
-                <MenuItem onClick={handleCloseNavMenu} >
-                  <Typography textAlign="center"  >Election Result</Typography>
-                </MenuItem>
-            
+              <MenuItem onClick={handleCloseNavMenu} >
+                <Typography textAlign="center">Home</Typography>
+              </MenuItem>
+              <MenuItem onClick={handleCloseNavMenu} >
+                <Typography textAlign="center">Voting</Typography>
+              </MenuItem>
+              <MenuItem onClick={handleCloseNavMenu} >
+                <Typography textAlign="center">Candidacy Application</Typography>
+              </MenuItem>
+              <MenuItem onClick={handleCloseNavMenu} >
+                <Typography textAlign="center">Election Result</Typography>
+              </MenuItem>  
             </Menu>
           </Box>
-          
+
           <Typography
             variant="h5"
             noWrap
@@ -109,29 +108,32 @@ function NavBar() {
           >
            IYTE
           </Typography>
+
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            
-              <Button
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block',ml:5 }}>
-               <Link className="link" to="/" sx={{textDecoration: 'none',color: 'white',boxShadow:'none'}}>Home</Link>
-              </Button>
-              <Button
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block',ml:5 }}>
-               Voting
-              </Button>
-              <Button
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block',ml:5 }}>
-               Candidancy Application
-              </Button>
-              <Button
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block',ml:5 }}>
-               Election Result
-              </Button>
-            
+            <Button
+              onClick={handleCloseNavMenu}
+              sx={{ my: 2, color: 'white', display: 'block',ml:5 }}
+            >
+              <Link className="link" to="/" sx={{textDecoration: 'none',color: 'white',boxShadow:'none'}}>Home</Link>
+            </Button>
+            <Button
+              onClick={handleCloseNavMenu}
+              sx={{ my: 2, color: 'white', display: 'block',ml:5 }}
+            >
+              Voting
+            </Button>
+            <Button
+              onClick={handleCloseNavMenu}
+              sx={{ my: 2, color: 'white', display: 'block',ml:5 }}
+            >
+              Candidacy Application
+            </Button>
+            <Button
+              onClick={handleCloseNavMenu}
+              sx={{ my: 2, color: 'white', display: 'block',ml:5 }}
+            >
+              Election Result
+            </Button>
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
@@ -168,4 +170,5 @@ function NavBar() {
     </AppBar>
   );
 }
+
 export default NavBar;

@@ -30,7 +30,8 @@ function Login (props)
       body : JSON.stringify({
         username : email,
         password : password,
-      }),
+      }),    
+      referrerPolicy: "unsafe_url" 
     })
     .then((res) => res.json())
     .then((res) => {

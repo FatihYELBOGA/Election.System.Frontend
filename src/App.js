@@ -35,7 +35,7 @@ function App()
             <Route exact path='/home' element={<Home />}/>
             <Route exact path='/voting' element={<Vote/>}/>
             <Route exact path='/candidacy-application' element={<Candidacy/>}/>
-            <Route exact path='/profile' element={<Profile/>}/>
+            <Route exact path='/profile' element={<Profile userId={userId} />}/>
           </Routes>
         </BrowserRouter>
       </div>

@@ -1,29 +1,54 @@
-import React from 'react';
-import './Profile.css'; // Import the CSS file for styling
+import React, { useEffect, useState } from 'react';
+import './Profile.css';
 
-function Profile() {
-  // Sample user data
-  const user = {
-    name: 'John Doe',
-    email: 'johndoe@example.com',
-    bio: 'I am a software engineer with a passion for web development.',
-    avatar: 'https://example.com/avatar.jpg', // URL to the user's avatar image
+function Profile(props) {
+
+  const userId = props.userId;
+  const [user, setUser] = useState(null);
+  
+  const [error, setError] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  const refreshUserId = () => {
+    return fetch("http://fatihyelboga-001-site1.atempurl.com/student/" + userId)
+      .then((res) => res.json())
+      .then(
+        (user) => {
+          setIsLoaded(true);
+          setUser(user);
+        },
+        (error) => {
+          console.log(error);
+          setIsLoaded(true);
+          setError(error);
+        }
+      );
   };
+  
+  useEffect(() => {
+    refreshUserId();
+  });
 
-  return (
-    <div className="profile-container">
-      <div className="profile-header">
-        <img src={user.avatar} alt="User Avatar" className="avatar" />
-        <h1>{user.name}</h1>
+  if(user != null){
+    return (
+      <div className="profile-container">
+        <div className="profile-header">
+          {
+            user.middleName === null ? 
+            (<h1>{user.firstName + " " + user.lastName}</h1>) : 
+            (<h1>{user.firstName + " " + user.middleName + " " + user.lastName}</h1>)
+          }
+        </div>
+        <div className="profile-body">
+          <p>Username: {user.username}</p>
+          <p>Gender: {user.gender}</p>
+          <p>GPA: {user.gpa}</p>
+          <p>Department: {user.department.name}</p>
+          <p>Faculty: {user.department.faculty.name}</p>
+        </div>
       </div>
-      <div className="profile-body">
-        <h2>Email</h2>
-        <p>{user.email}</p>
-        <h2>Bio</h2>
-        <p>{user.bio}</p>
-      </div>
-    </div>
-  );
+    );
+  }
 }
 
 export default Profile;

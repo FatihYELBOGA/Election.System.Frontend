@@ -11,10 +11,10 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import { Link } from '@mui/material';
 import Img from '../../iyte_logo.jpg'
 import './Navbar.css'
 import { useNavigate } from 'react-router-dom';
+import { hover } from '@testing-library/user-event/dist/hover';
 
 
 function NavBar(props) 
@@ -22,7 +22,7 @@ function NavBar(props)
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const {userId, setUserId} = props;
+  const {setUserId} = props;
   
 
   const handleOpenNavMenu = (event) => {
@@ -39,11 +39,12 @@ function NavBar(props)
   const handleCloseUserMenu = () => {
       setUserId(0);
       navigate("/");
+      setAnchorElUser(null);
   };
 
   const handleProfileUserMenu = () => {
     navigate("/profile")
-
+    setAnchorElUser(null);
   };
 
   return (
@@ -120,35 +121,35 @@ function NavBar(props)
 
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             <Button
-              onClick={handleCloseNavMenu}
+              onClick={e => navigate("/home")}
               sx={{ my: 2, color: 'white', display: 'block',ml:5 }}
             >
-              <Link className="link" to="/" sx={{textDecoration: 'none',color: 'white',boxShadow:'none'}}>Home</Link>
+              Home
             </Button>
             <Button
-              onClick={handleCloseNavMenu}
+              onClick={e => navigate("/voting")}
               sx={{ my: 2, color: 'white', display: 'block',ml:5 }}
             >
-              Voting
+              VOTING
             </Button>
             <Button
-              onClick={handleCloseNavMenu}
+              onClick={e => navigate("/candidacy-application")}
               sx={{ my: 2, color: 'white', display: 'block',ml:5 }}
             >
-              Candidacy Application
+              CANDIDACY APPLICATION
             </Button>
             <Button
-              onClick={handleCloseNavMenu}
+              onClick={e => navigate("/election-result")}
               sx={{ my: 2, color: 'white', display: 'block',ml:5 }}
             >
-              Election Result
+              ELECTION RESULT
             </Button>
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="Remy Sharp" />
               </IconButton>
             </Tooltip>
             <Menu
@@ -165,7 +166,7 @@ function NavBar(props)
                 horizontal: 'right',
               }}
               open={Boolean(anchorElUser)}
-              
+              onClose={e => { setAnchorElUser(null); } }
             >
                 <MenuItem onClick={handleProfileUserMenu}>
                   <Typography textAlign="center">Profile</Typography>

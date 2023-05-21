@@ -17,7 +17,7 @@ function App()
     return (
       <BrowserRouter>
         <Routes>
-          <Route exact path='/' element={<Login userId={userId} setUserId={setUserId} role={role} setRole={setRole} />} />
+          <Route exact path='/' element={<Login setUserId={setUserId} setRole={setRole} />} />
         </Routes>
       </BrowserRouter>
     );

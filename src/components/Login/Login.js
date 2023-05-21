@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import "./Login.css";
+import { useNavigate } from "react-router-dom";
 
-function Login (props)  {
+function Login (props)  
+{
+  const navigate = useNavigate();
+  const{userId, setUserId, role, setRole} = props;
+
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
- 
+  const [password, setPassword] = useState(""); 
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -15,32 +18,39 @@ function Login (props)  {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e) => 
+  {
     e.preventDefault();
-    
-        fetch("http://fatihyelboga-001-site1.atempurl.com/login",
-        {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                userName : email,
-                password : password,
-            }),
-        })
-        .then((res) => res.json())
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err))
-    
+    fetch("http://fatihyelboga-001-site1.atempurl.com/login",
+    {
+      method: "POST",
+      headers: {
+      "Content-Type": "application/json",
+      },
+      body : JSON.stringify({
+        username : email,
+        password : password,
+      }),
+    })
+    .then((res) => res.json())
+    .then((res) => {
+      if(res.userId != null){
+        console.log(res);
+        setUserId(res.userId);
+        setRole(res.role);
+        navigate("/home");
+      } else {
+        alert(res.message);
+      }
+    })
+    .catch((err) => console.log(err))
   };
 
   return (
     <div className="login-page">
-      <h2>Login to IZTECH Election System</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label>Email:</label>
+          <label>Username</label>
           <input
             type="email"
             value={email}
@@ -49,7 +59,7 @@ function Login (props)  {
           />
         </div>
         <div className="form-group">
-          <label>Password:</label>
+          <label>Password</label>
           <input
             type="password"
             value={password}
@@ -57,8 +67,7 @@ function Login (props)  {
             required
           />
         </div>
-        <button 
-        type="submit">Login</button>
+        <button type="submit">LOGIN</button>
       </form>
     </div>
   );

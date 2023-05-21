@@ -1,6 +1,6 @@
 import './App.css';
-import NavBar from './components/Navbar/Navbar';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import NavBar from './components/Navbar/Navbar';
 import Login from './components/Login/Login'
 import Home from './components/Home/Home'
 import Vote from './components/Vote/Vote'
@@ -8,30 +8,25 @@ import Candidacy from './components/Candidacy/Candidacy'
 import Profile from './components/Profile/Profile'
 import { useState } from 'react';
 
-
 function App() 
 {
   const[userId, setUserId] = useState(0);
+  const[role, setRole] = useState(null);
+
   if(userId === 0){
-    return(
-      <div className='App'>
-        <BrowserRouter>
-          <Routes>
-          <Route exact path='/login' element={<Login userId={userId} setUserId={setUserId} />} />
-          </Routes>
-        </BrowserRouter>
-
-      </div>
+    return (
+      <BrowserRouter>
+        <Routes>
+          <Route exact path='/' element={<Login userId={userId} setUserId={setUserId} role={role} setRole={setRole} />} />
+        </Routes>
+      </BrowserRouter>
     );
-
-  }else{
+  } else if(role === "STUDENT") {
     return (
       <div className="App">
-        
+        <NavBar />
         <BrowserRouter>
-          <NavBar></NavBar>
           <Routes>
-            
             <Route exact path='/home' element={<Home/>}/>
             <Route exact path='/voting' element={<Vote/>}/>
             <Route exact path='/candidacy-application' element={<Candidacy/>}/>
@@ -40,9 +35,7 @@ function App()
         </BrowserRouter>
       </div>
     );
-
   }
-  
 }
 
 export default App;

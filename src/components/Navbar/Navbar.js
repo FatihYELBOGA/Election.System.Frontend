@@ -14,13 +14,16 @@ import MenuItem from '@mui/material/MenuItem';
 import { Link } from '@mui/material';
 import Img from '../../iyte_logo.jpg'
 import './Navbar.css'
+import { useNavigate } from 'react-router-dom';
 
-const settings = ['Profile', 'Logout'];
 
-function NavBar() 
+function NavBar(props) 
 {
+  const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const {userId, setUserId} = props;
+  
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -34,7 +37,13 @@ function NavBar()
   };
 
   const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
+      setUserId(0);
+      navigate("/");
+  };
+
+  const handleProfileUserMenu = () => {
+    navigate("/profile")
+
   };
 
   return (
@@ -156,13 +165,16 @@ function NavBar()
                 horizontal: 'right',
               }}
               open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
+              
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                <MenuItem onClick={handleProfileUserMenu}>
+                  <Typography textAlign="center">Profile</Typography>
                 </MenuItem>
-              ))}
+
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">LogOut</Typography>
+                </MenuItem>
+              
             </Menu>
           </Box>
         </Toolbar>

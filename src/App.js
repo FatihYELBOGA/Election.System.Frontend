@@ -10,24 +10,29 @@ import { useState } from 'react';
 
 function App() 
 {
+
   const[userId, setUserId] = useState(0);
   const[role, setRole] = useState(null);
 
   if(userId === 0){
     return (
+      
       <BrowserRouter>
+      
         <Routes>
-          <Route exact path='/' element={<Login setUserId={setUserId} setRole={setRole} />} />
+          <Route exact path='/' element={<Login setUserId={setUserId} setRole={setRole} />}  />
         </Routes>
+        
       </BrowserRouter>
     );
   } else if(role === "STUDENT") {
     return (
       <div className="App">
-        <NavBar />
+        
         <BrowserRouter>
+        <NavBar setUserId={setUserId} userId={userId} />
           <Routes>
-            <Route exact path='/home' element={<Home/>}/>
+            <Route exact path='/home' element={<Home />}/>
             <Route exact path='/voting' element={<Vote/>}/>
             <Route exact path='/candidacy-application' element={<Candidacy/>}/>
             <Route exact path='/profile' element={<Profile/>}/>

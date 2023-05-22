@@ -31,7 +31,6 @@ function Login (props)
         username : email,
         password : password,
       }),    
-      referrerPolicy: "unsafe_url" 
     })
     .then((res) => res.json())
     .then((res) => {

@@ -21,7 +21,7 @@ function Login (props)
   const handleSubmit = (e) => 
   {
     e.preventDefault();
-    fetch("http://fatihyelboga-001-site1.atempurl.com/login",
+    fetch("https://iyte-election.azurewebsites.net/login",
     {
       method: "POST",
       headers: {

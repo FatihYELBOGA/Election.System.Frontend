@@ -11,7 +11,7 @@ function Home()
     const [postList, setPostList] = useState([]);
 
     const refreshPosts = () => {
-        fetch("http://fatihyelboga-001-site1.atempurl.com/announcements")
+        fetch("https://iyte-election.azurewebsites.net/announcements")
         .then((res) =>
             res.json() )
         .then(

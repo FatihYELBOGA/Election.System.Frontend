@@ -10,7 +10,7 @@ function Profile(props) {
   const [isLoaded, setIsLoaded] = useState(false);
 
   const refreshUserId = () => {
-    return fetch("http://fatihyelboga-001-site1.atempurl.com/student/" + userId)
+    return fetch("https://iyte-election.azurewebsites.net/student/" + userId)
       .then((res) => res.json())
       .then(
         (user) => {

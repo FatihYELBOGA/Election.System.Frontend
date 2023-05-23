@@ -1,10 +1,15 @@
 .login-page {
-  max-width: 250px;
-  margin: 10% auto;
-  padding: 50px;
+  max-width: 400px;
+  margin: 15% auto;
+  padding: 20px 50px 50px 50px;
   background-color: #f8f8f8;
   border: 1px solid #ccc;
   border-radius: 20px;
+ 
+}
+.login-head{
+  display: flex;
+  justify-content: center;
 }
 
 .login-page .form-group {
@@ -26,7 +31,7 @@
   display: block;
   width: 100%;
   padding: 10px;
-  background-color: #007bff;
+  background-color: #B61815;
   color: #fff;
   border: none;
   border-radius: 10px;
@@ -35,5 +40,5 @@
 }
   
 .login-page button[type="submit"]:hover {
-  background-color: #0056b3;
+  background-color: #d40f0f;
 }

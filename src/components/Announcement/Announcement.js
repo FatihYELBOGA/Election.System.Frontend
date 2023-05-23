@@ -5,13 +5,15 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import Img from '../../iyte_logo.jpg'
+import './Announcement.css'
+
 
 function Announcement(props)
 {
     const {announcementId, title, description} = props;
 
     return (
-      <Card id={announcementId} sx={{ width: 700 , marginTop: 15}}>
+      <Card className='announcement-card' id={announcementId} sx={{ marginTop: 15}}>
         <CardActionArea>
           <CardMedia
             component="img"

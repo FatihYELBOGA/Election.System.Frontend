@@ -6,3 +6,7 @@
     height: 100vh;
     background-color: aliceblue;   
 }
+.announcement{
+    display: flex;
+    justify-content: center;
+}

@@ -40,11 +40,12 @@ function Profile(props) {
           }
         </div>
         <div className="profile-body">
-          <p>Username: {user.username}</p>
-          <p>Gender: {user.gender}</p>
-          <p>GPA: {user.gpa}</p>
-          <p>Department: {user.department.name}</p>
-          <p>Faculty: {user.department.faculty.name}</p>
+          <div className='profile-element'> <h4>Username</h4> <p> {user.username}</p></div>
+          <div className='profile-element'> <h4>Gender</h4> <p> {user.gender}</p></div>
+          <div className='profile-element'> <h4>GPA</h4> <p> {user.gpa}</p></div>
+          <div className='profile-element'> <h4>Department</h4> <p> {user.department.name}</p></div>
+          <div className='profile-element'> <h4>Faculty</h4> <p> {user.department.faculty.name}</p></div>
+          
         </div>
       </div>
     );

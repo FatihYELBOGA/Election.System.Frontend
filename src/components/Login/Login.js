@@ -47,10 +47,14 @@ function Login (props)
 
   return (
     <div className="login-page">
+      <div className="login-head">
+        <h2>IYTE Election System</h2>
+      </div>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label>Username</label>
+         
           <input
+          placeholder="Username"
             type="email"
             value={email}
             onChange={handleEmailChange}
@@ -58,8 +62,9 @@ function Login (props)
           />
         </div>
         <div className="form-group">
-          <label>Password</label>
+          
           <input
+            placeholder="Password"
             type="password"
             value={password}
             onChange={handlePasswordChange}

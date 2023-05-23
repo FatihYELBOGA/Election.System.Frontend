@@ -14,7 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Img from '../../iyte_logo.jpg'
 import './Navbar.css'
 import { useNavigate } from 'react-router-dom';
-import { hover } from '@testing-library/user-event/dist/hover';
+
 
 
 function NavBar(props) 
@@ -48,7 +48,7 @@ function NavBar(props)
   };
 
   return (
-    <AppBar position="static" sx={{backgroundColor: "#B61815", height:100}}>
+    <AppBar className='app-bar' position="static" sx={{backgroundColor: "#B61815", height:100}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Box className='logo' sx={{marginTop: 2}}>

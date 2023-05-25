@@ -4,13 +4,22 @@ import './Profile.css';
 function Profile(props) {
 
   const userId = props.userId;
+  const role = props.role;
+  var link;
   const [user, setUser] = useState(null);
   
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
 
+  if( role ==="STUDENT"){
+    link = "students"
+  }else if(role ==="STUDENT_AFFAIR"){
+    link = "administrations"
+  }
+
   const refreshUserId = () => {
-    return fetch("https://iyte-election.azurewebsites.net/student/" + userId)
+
+    return fetch("https://iyte-election.azurewebsites.net/"+link+"/" + userId)
       .then((res) => res.json())
       .then(
         (user) => {
@@ -27,9 +36,10 @@ function Profile(props) {
   
   useEffect(() => {
     refreshUserId();
-  });
+  }, [userId]);
 
   if(user != null){
+    if(role === "STUDENT"){
     return (
       <div className="profile-container">
         <div className="profile-header">
@@ -49,6 +59,25 @@ function Profile(props) {
         </div>
       </div>
     );
+        }else if(role === "STUDENT_AFFAIR"){
+          return (
+            <div className="profile-container">
+              <div className="profile-header">
+                {
+                  user.middleName === null ? 
+                  (<h1>{user.firstName + " " + user.lastName}</h1>) : 
+                  (<h1>{user.firstName + " " + user.middleName + " " + user.lastName}</h1>)
+                }
+              </div>
+              <div className="profile-body">
+                <div className='profile-element'> <h4>Username</h4> <p> {user.username}</p></div>
+                <div className='profile-element'> <h4>Gender</h4> <p> {user.gender}</p></div>
+                
+              </div>
+            </div>
+          );
+
+        }
   }
 }
 

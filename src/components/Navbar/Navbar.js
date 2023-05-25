@@ -22,7 +22,15 @@ function NavBar(props)
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const {setUserId} = props;
+  const {setUserId,role} = props;
+  var menuNames = [];
+  if(role === "STUDENT"){
+    menuNames = ["HOME","VOTING","CANDIDACY APPLICATION","ELECTION RESULT"]
+  }else if(role === "STUDENT_AFFAIR"){
+    menuNames = ["ANNOUNCEMENTS","PROCESSES","CANDIDACY APPLICATIONS","USERS"]
+  }
+  
+  
   
 
   const handleOpenNavMenu = (event) => {
@@ -120,30 +128,17 @@ function NavBar(props)
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            {menuNames.map((menu) =>(
+            menu = menu.replace(" ","-"),
             <Button
-              onClick={e => navigate("/home")}
+              onClick={e => navigate("/"+menu.toLowerCase())}
               sx={{ my: 2, color: 'white', display: 'block',ml:5 }}
             >
-              Home
+              {menu.replace("-"," ")}
             </Button>
-            <Button
-              onClick={e => navigate("/voting")}
-              sx={{ my: 2, color: 'white', display: 'block',ml:5 }}
-            >
-              VOTING
-            </Button>
-            <Button
-              onClick={e => navigate("/candidacy-application")}
-              sx={{ my: 2, color: 'white', display: 'block',ml:5 }}
-            >
-              CANDIDACY APPLICATION
-            </Button>
-            <Button
-              onClick={e => navigate("/election-result")}
-              sx={{ my: 2, color: 'white', display: 'block',ml:5 }}
-            >
-              ELECTION RESULT
-            </Button>
+
+            ))}
+            
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>

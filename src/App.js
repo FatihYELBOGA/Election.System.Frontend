@@ -6,7 +6,7 @@ import Home from './components/Student/Home/Home'
 import Vote from './components/Student/Vote/Vote'
 import Candidacy from './components/Student/Candidacy/Candidacy'
 import Profile from './components/Profile/Profile'
-import AnnouncementAdmin from './components/Admin/Announcement/AnnouncementAdmin'
+import AnnouncementPage from './components/Admin/Announcement/AnnouncementPage'
 import CandidacyApplication from './components/Admin/CandidacyApplication/CandidacyApplication';
 import Process from './components/Admin/Processes/Process';
 import User from './components/Admin/User/User';
@@ -24,7 +24,7 @@ function App()
       <BrowserRouter>
       
         <Routes>
-          <Route exact path='/' element={<Login setUserId={setUserId} setRole={setRole} />}  />
+          <Route exact path='/' element={<Login setUserId={setUserId} setRole={setRole} role={role} />}  />
         </Routes>
         
       </BrowserRouter>
@@ -51,7 +51,7 @@ function App()
         <BrowserRouter>
         <NavBar setUserId={setUserId} userId={userId} role={role} />
           <Routes>
-            <Route exact path='/announcements' element={<AnnouncementAdmin />}/>
+            <Route exact path='/announcements' element={<AnnouncementPage />}/>
             <Route exact path='/processes' element={<Process/>}/>
             <Route exact path='/candidacy-applications' element={<CandidacyApplication/>}/>
             <Route exact path='/users' element={<User/>}/>

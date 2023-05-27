@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import { CardActionArea, Button } from '@mui/material';
 import Img from '../../../iyte_logo.jpg';
 import './Announcement.css';
+import TextField from '@mui/material/TextField';
 
 function Announcement(props) {
   const { announcementId, title, description } = props;
@@ -27,19 +28,15 @@ function Announcement(props) {
         <CardMedia component="img" height="140" image={Img} alt="green iguana" />
         <CardContent>
           {isEditing ? (
-            <input type="text" value={title} onChange={(e) => console.log(e.target.value)} />
+            <TextField value={title} onChange={(e) => console.log(e.target.value)}  id="outlined-basic" label="Title" variant="outlined" sx={{width: "70%",marginBottom:5}} />
           ) : (
             <Typography gutterBottom variant="h5" component="div">
               {title}
             </Typography>
           )}
           {isEditing ? (
-            <textarea
-              value={description}
-              onChange={(e) => console.log(e.target.value)}
-              rows={4}
-              cols={50}
-            />
+            <TextField value={description} onChange={(e) => console.log(e.target.value)} id="outlined-basic" label="Description" variant="outlined" sx={{width: "70%", marginBottom:5}} />
+            
           ) : (
             <Typography variant="body2" color="text.secondary">
               {description}

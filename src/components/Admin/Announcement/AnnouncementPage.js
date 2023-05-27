@@ -3,9 +3,11 @@ import Announcement from "../Announcement/Announcement";
 import './AnnouncementPage.css'
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import AnnouncementForm from "./AnnouncementForm";
 
-function AnnouncementPage()
+function AnnouncementPage(props)
 {
+    const {userId} = props;
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [postList, setPostList] = useState([]);
@@ -43,6 +45,7 @@ function AnnouncementPage()
         return (
             <div className="container">
                 <div fixed="true" className="announcement">
+                    <AnnouncementForm userId={userId}></AnnouncementForm>
                     {postList.map((announcement) => (
                         <Announcement key={announcement.id} announcementId={announcement.id} title={announcement.title} description={announcement.description}></Announcement>
                     ))}

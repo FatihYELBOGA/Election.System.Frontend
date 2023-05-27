@@ -51,7 +51,7 @@ function App()
         <BrowserRouter>
         <NavBar setUserId={setUserId} userId={userId} role={role} />
           <Routes>
-            <Route exact path='/announcements' element={<AnnouncementPage />}/>
+            <Route exact path='/announcements' element={<AnnouncementPage userId={userId} />}/>
             <Route exact path='/processes' element={<Process/>}/>
             <Route exact path='/candidacy-applications' element={<CandidacyApplication/>}/>
             <Route exact path='/users' element={<User/>}/>

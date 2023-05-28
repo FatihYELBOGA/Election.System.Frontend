@@ -11,14 +11,46 @@ import TextField from '@mui/material/TextField';
 function Announcement(props) {
   const { announcementId, title, description } = props;
   const [isEditing, setIsEditing] = useState(false);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [editTitle, setEditTitle] = useState(title);
+  const [editDescription, setEditDescription] = useState(description);
+
+  const handleChangeStartDate = (e) => {
+    setStartDate(e.target.value.replace("/", ","));
+  };
+
+  const handleChangeFinishDate = (e) => {
+    setEndDate(e.target.value.replace("/", ","));
+  };
 
   const handleEdit = () => {
     setIsEditing(true);
     // Perform edit logic here
   };
 
+  const handleSave = () => {
+      setIsEditing(false);
+
+  };
+
   const handleDelete = () => {
-    // Perform delete logic here
+    fetch("https://iyte-election.azurewebsites.net/announcements/"+announcementId,{
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id : announcementId,
+      }),
+    })
+    .then((res) => res.json())
+    .then((result) =>{console.log(result)})
+    .catch((err) => {
+      // Handle any errors
+      console.log(err);
+    });
+    
     console.log(`Deleting announcement with ID: ${announcementId}`);
   };
 
@@ -28,23 +60,44 @@ function Announcement(props) {
         <CardMedia component="img" height="140" image={Img} alt="green iguana" />
         <CardContent>
           {isEditing ? (
-            <TextField value={title} onChange={(e) => console.log(e.target.value)}  id="outlined-basic" label="Title" variant="outlined" sx={{width: "70%",marginBottom:5}} />
+            <TextField value={editTitle} onChange={(e) => setEditTitle(e.target.value)}  id="outlined-basic" label="Title" variant="outlined" sx={{width: "70%",marginBottom:5}} />
           ) : (
             <Typography gutterBottom variant="h5" component="div">
-              {title}
+              {editTitle}
             </Typography>
           )}
           {isEditing ? (
-            <TextField value={description} onChange={(e) => console.log(e.target.value)} id="outlined-basic" label="Description" variant="outlined" sx={{width: "70%", marginBottom:5}} />
+            <TextField value={editDescription} onChange={(e) => setEditDescription(e.target.value)} id="outlined-basic" label="Description" variant="outlined" sx={{width: "70%", marginBottom:5}} />
             
           ) : (
             <Typography variant="body2" color="text.secondary">
-              {description}
+              {editDescription}
             </Typography>
           )}
+          {isEditing ? (<div style={{ display: "flex", justifyContent: "space-between" }}>
+              <div style={{ marginLeft: '10%' }}>
+                <h4>Start Date</h4>
+                <input
+                  value={startDate}
+                  type='date'
+                  onChange={handleChangeStartDate}
+                  style={{ width: 120, height: 25 }}
+                />
+              </div>
+              <div style={{ marginRight: '10%' }}>
+                <h4>Finish Date</h4>
+                <input
+                  value={endDate}
+                  type='date'
+                  onChange={handleChangeFinishDate}
+                  style={{ width: 120, height: 25 }}
+                />
+              </div>
+            </div>
+              ) : (<div></div>)}
           <div className="buttons">
             {isEditing ? (
-              <Button onClick={() => setIsEditing(false)}>Save</Button>
+              <Button onClick={handleSave}>Save</Button>
             ) : (
               <Button onClick={handleEdit}>Edit</Button>
             )}

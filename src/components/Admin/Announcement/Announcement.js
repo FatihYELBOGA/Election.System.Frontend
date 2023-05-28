@@ -40,10 +40,10 @@ function Announcement(props) {
       },
       body: JSON.stringify({
         id: announcementId,
-        title: title,
-        description: description,
-        startDate: startDate,
-        endDate: endDate,
+        title: editTitle,
+        description: editDescription,
+        startDate: editStartDate,
+        endDate: editEndDate,
         administrationId: userId,
       }),
     })
@@ -57,8 +57,8 @@ function Announcement(props) {
       setIsEditing(false);
       setEditDescription(description);
       setEditTitle(title);
-      setStartDate(startDate);
-      setEndDate(endDate);
+      setStartDate(startDate.split("T")[0]);
+      setEndDate(endDate.split("T")[0]);
   };
 
   const handleDelete = () => {

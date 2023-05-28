@@ -7,12 +7,14 @@ import { CardActionArea, Button } from '@mui/material';
 import Img from '../../../iyte_logo.jpg';
 import './Announcement.css';
 import TextField from '@mui/material/TextField';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 function Announcement(props) {
-  const { announcementId, title, description, userId } = props;
+  const { announcementId, title, description, userId,startDate,endDate} = props;
   const [isEditing, setIsEditing] = useState(false);
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
+  const [editStartDate, setStartDate] = useState(startDate.split("T")[0]);
+  const [editEndDate, setEndDate] = useState(endDate.split("T")[0]);
   const [editTitle, setEditTitle] = useState(title);
   const [editDescription, setEditDescription] = useState(description);
 
@@ -51,6 +53,13 @@ function Announcement(props) {
 
 
   };
+  const handleCancel = (e) =>{
+      setIsEditing(false);
+      setEditDescription(description);
+      setEditTitle(title);
+      setStartDate(startDate);
+      setEndDate(endDate);
+  };
 
   const handleDelete = () => {
     fetch("https://iyte-election.azurewebsites.net/announcements/"+announcementId,{
@@ -71,55 +80,60 @@ function Announcement(props) {
   };
 
   return (
-    <Card className="announcement-card" id={announcementId} sx={{ marginTop: 15 }}>
+    <Card className="announcement-card" id={announcementId} sx={{ marginTop: 7,marginBottom:5 }}>
       <CardActionArea>
         <CardMedia component="img" height="140" image={Img} alt="green iguana" />
         <CardContent>
           {isEditing ? (
-            <TextField value={editTitle} onChange={(e) => setEditTitle(e.target.value)}  id="outlined-basic" label="Title" variant="outlined" sx={{width: "70%",marginBottom:5}} />
+            <TextField value={editTitle} onChange={(e) => setEditTitle(e.target.value)}  id="outlined-basic" label="Title" variant="outlined" sx={{width: "70%",marginBottom:3}} />
           ) : (
             <Typography gutterBottom variant="h5" component="div">
               {editTitle}
             </Typography>
           )}
           {isEditing ? (
-            <TextField value={editDescription} onChange={(e) => setEditDescription(e.target.value)} id="outlined-basic" label="Description" variant="outlined" sx={{width: "70%", marginBottom:5}} />
+            <TextField value={editDescription} onChange={(e) => setEditDescription(e.target.value)} id="outlined-basic" label="Description" variant="outlined" sx={{width: "70%", marginBottom:0}} />
             
           ) : (
             <Typography variant="body2" color="text.secondary">
               {editDescription}
             </Typography>
           )}
-          {isEditing ? (<div style={{ display: "flex", justifyContent: "space-between" }}>
-              <div style={{ marginLeft: '10%' }}>
-                <h4>Start Date</h4>
+          {isEditing ? (<div style={{ marginBottom:10 }}><div style={{ marginBottom:5 }}>
+                <h4 style={{marginBottom:5}}>Start Date</h4>
                 <input
-                  
-                  value={startDate}
+                  value={editStartDate}
                   type='date'
                   onChange={handleChangeStartDate}
-                  style={{ width: 120, height: 25 }}
+                  style={{ width: "70%", height: 35,fontSize:18,textAlign:"center" }}
                 />
               </div>
-              <div style={{ marginRight: '10%' }}>
-                <h4>Finish Date</h4>
+              <div style={{  }}>
+                <h4 style={{marginBottom:5}}>Finish Date</h4>
                 <input
-                  value={endDate}
+
+                  value={editEndDate}
                   type='date'
                   onChange={handleChangeFinishDate}
-                  style={{ width: 120, height: 25 }}
+                  style={{ width: "70%", height: 35,fontSize:18,textAlign:"center" }}
                 />
               </div>
-            </div>
+              </div>
               ) : (<div></div>)}
-          <div className="buttons">
+          
             {isEditing ? (
-              <Button onClick={handleSave}>Save</Button>
+              <div className="buttons" style={{display: "flex",justifyContent:"center"}}>
+              <Button onClick={handleSave} variant='contained' sx={{width:"30%",marginRight:3,backgroundColor:"#B61815"}}>Save</Button>
+              <Button onClick={handleCancel} variant='contained'sx={{width:"30%",marginLeft:3,backgroundColor:"#B61815"}}>Cancel</Button>
+              </div>
             ) : (
-              <Button onClick={handleEdit}>Edit</Button>
+              <div className="buttons" style={{display: "flex",justifyContent:"space-between"}}>
+              <Button onClick={handleEdit}><EditIcon sx={{color:"black",fontSize:"35px",marginLeft:2}} /></Button>
+              <Button onClick={handleDelete}><DeleteIcon sx={{color:"black",fontSize:"35px",marginRight:2}}/></Button>
+              </div>  
             )}
-            <Button onClick={handleDelete}>Delete</Button>
-          </div>
+            
+          
         </CardContent>
       </CardActionArea>
     </Card>

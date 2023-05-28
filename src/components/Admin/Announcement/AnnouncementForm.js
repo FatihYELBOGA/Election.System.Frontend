@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import { Button, CardActionArea } from '@mui/material';
-import Typography from '@mui/material/Typography';
+
 
 function AnnouncementForm(props) {
   const { userId } = props;
@@ -48,11 +48,9 @@ function AnnouncementForm(props) {
   };
 
   return (
-    <Card className='announcement-card' sx={{ marginTop: 15, display: "flex", justifyContent: "center" }}>
+    <Card className='announcement-card' sx={{ marginTop: 15, display: "flex", justifyContent: "center",borderRadius:5 }}>
       <CardActionArea>
-        <Typography gutterBottom variant="h5" component="div" sx={{ marginTop: 5 }}>
-          Add New Announcement
-        </Typography>
+        
         <CardContent sx={{ display: "block", justifyContent: "center" }}>
           <form>
             <TextField
@@ -63,7 +61,7 @@ function AnnouncementForm(props) {
               id="outlined-basic"
               label="Title"
               variant="outlined"
-              sx={{ width: "70%", marginBottom: 5 }}
+              sx={{ width: "70%", marginBottom: 3,marginTop:5 }}
             />
             <TextField
               value={description}
@@ -73,36 +71,37 @@ function AnnouncementForm(props) {
               id="outlined-basic"
               label="Description"
               variant="outlined"
-              sx={{ width: "70%", marginBottom: 5 }}
+              sx={{ width: "70%", marginBottom:0 }}
             />
 
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <div style={{ marginLeft: '10%' }}>
-                <h4>Start Date</h4>
+           
+              <div style={{  }}>
+                <h4 style={{marginBottom:5}}>Start Date</h4>
                 <input
                   value={startDate}
                   type='date'
                   onChange={handleChangeStartDate}
-                  style={{ width: 120, height: 25 }}
+                  style={{ width: "70%", height: 35,fontSize:18,textAlign:"center" }}
                 />
               </div>
-              <div style={{ marginRight: '10%' }}>
-                <h4>Finish Date</h4>
+              <div style={{  }}>
+                <h4 style={{marginBottom:5}}>Finish Date</h4>
                 <input
+
                   value={endDate}
                   type='date'
                   onChange={handleChangeFinishDate}
-                  style={{ width: 120, height: 25 }}
+                  style={{ width: "70%", height: 35,fontSize:18,textAlign:"center" }}
                 />
               </div>
-            </div>
-            <div style={{ marginTop: 20 }}>
+           
+            <div style={{ marginTop: 40,marginBottom: 20 }}>
               <Button
                 onClick={handleSubmitAnnouncement}
-                sx={{ width: "30%", backgroundColor: '#B61815' }}
+                sx={{ width: "70%", height:45, backgroundColor: '#B61815' ,fontWeight:"Bold"}}
                 variant="contained"
               >
-                POST
+                ADD ANNOUNCEMENT
               </Button>
             </div>
           </form>

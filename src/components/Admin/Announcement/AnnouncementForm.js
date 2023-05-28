@@ -13,11 +13,14 @@ function AnnouncementForm(props) {
   const [description, setDescription] = useState('');
 
   const handleChangeStartDate = (e) => {
-    setStartDate(e.target.value.replace("/", ","));
+    console.log(e.target.value)
+    setStartDate(e.target.value);
+ 
   };
 
   const handleChangeFinishDate = (e) => {
-    setEndDate(e.target.value.replace("/", ","));
+    setEndDate(e.target.value);
+   
   };
 
   const handleSubmitAnnouncement = (e) => {

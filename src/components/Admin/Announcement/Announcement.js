@@ -9,7 +9,7 @@ import './Announcement.css';
 import TextField from '@mui/material/TextField';
 
 function Announcement(props) {
-  const { announcementId, title, description } = props;
+  const { announcementId, title, description, userId } = props;
   const [isEditing, setIsEditing] = useState(false);
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
@@ -17,11 +17,11 @@ function Announcement(props) {
   const [editDescription, setEditDescription] = useState(description);
 
   const handleChangeStartDate = (e) => {
-    setStartDate(e.target.value.replace("/", ","));
+    setStartDate(e.target.value);
   };
 
   const handleChangeFinishDate = (e) => {
-    setEndDate(e.target.value.replace("/", ","));
+    setEndDate(e.target.value);
   };
 
   const handleEdit = () => {
@@ -29,8 +29,26 @@ function Announcement(props) {
     // Perform edit logic here
   };
 
-  const handleSave = () => {
+  const handleSave = (e) => {
+    e.preventDefault();
+    fetch("https://iyte-election.azurewebsites.net/announcements"+announcementId, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: announcementId,
+        title: title,
+        description: description,
+        startDate: startDate,
+        endDate: endDate,
+        administrationId: userId,
+      }),
+    })
+      .then((res) => res.json())
+      .catch((err) => console.log(err));
       setIsEditing(false);
+
 
   };
 
@@ -50,8 +68,6 @@ function Announcement(props) {
       // Handle any errors
       console.log(err);
     });
-    
-    console.log(`Deleting announcement with ID: ${announcementId}`);
   };
 
   return (
@@ -78,6 +94,7 @@ function Announcement(props) {
               <div style={{ marginLeft: '10%' }}>
                 <h4>Start Date</h4>
                 <input
+                  
                   value={startDate}
                   type='date'
                   onChange={handleChangeStartDate}

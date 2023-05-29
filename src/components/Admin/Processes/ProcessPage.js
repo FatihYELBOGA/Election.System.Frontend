@@ -1,15 +1,15 @@
 import React, {useState, useEffect} from "react";
-import Announcement from "./Announcement";
-import './AnnouncementPage.css'
+import Process from "./Process";
+import './ProcessPage.css'
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
-import AnnouncementForm from "./AnnouncementForm";
+import ProcessForm from "./ProcessForm";
 import AddIcon from '@mui/icons-material/Add';
 import { IconButton } from "@mui/material";
 import RemoveIcon from '@mui/icons-material/Remove';
 
 
-function AnnouncementPage(props)
+function ProcessPage(props)
 {
     const {userId} = props;
     const [error, setError] = useState(null);
@@ -18,7 +18,7 @@ function AnnouncementPage(props)
     const [isAdded, setIsAdded] = useState(false);
 
     const refreshPosts = () => {
-        fetch("https://iyte-election.azurewebsites.net/announcements")
+        fetch("https://iyte-election.azurewebsites.net/processes")
         .then((res) =>
             res.json() )
         .then(
@@ -55,15 +55,15 @@ function AnnouncementPage(props)
                 </IconButton>
                 
                 </div>
-                <div fixed="true" className="announcement"> <AnnouncementForm userId={userId}></AnnouncementForm></div>
+                <div fixed="true" className="announcement"> <ProcessForm userId={userId}></ProcessForm></div>
                 
                 </div>) : 
                 (<div className="container-announcement"><div className="button" ><IconButton sx={{backgroundColor:"#B61815",margin:8,height:50,width:50}} onClick={(e) => setIsAdded(true)} aria-label="add">
                         <AddIcon sx={{color:"white"}}/>
                 </IconButton></div>
                 <div fixed="true" className="announcement">
-                    {postList.map((announcement) => (
-                        <Announcement key={announcement.id} userId={userId} announcementId={announcement.id} title={announcement.title} description={announcement.description} startDate={announcement.startDate} endDate={announcement.endDate}></Announcement>
+                    {postList.map((process) => (
+                        <Process key={process.id} userId={userId} processId={process.id} startDate={process.startDate} endDate={process.endDate} processName={process.process}></Process>
                     ))}
                 </div>
                 </div>)}
@@ -75,4 +75,4 @@ function AnnouncementPage(props)
     }
 }
 
-export default AnnouncementPage;
+export default ProcessPage;

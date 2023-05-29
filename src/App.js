@@ -8,8 +8,8 @@ import Candidacy from './components/Student/Candidacy/Candidacy'
 import Profile from './components/Profile/Profile'
 import AnnouncementPage from './components/Admin/Announcement/AnnouncementPage'
 import CandidacyApplication from './components/Admin/CandidacyApplication/CandidacyApplication';
-import Process from './components/Admin/Processes/Process';
-import User from './components/Admin/User/User';
+import ProcessPage from './components/Admin/Processes/ProcessPage';
+import UsersPage from './components/Admin/User/UsersPage';
 import { useState } from 'react';
 
 function App() 
@@ -52,9 +52,9 @@ function App()
         <NavBar setUserId={setUserId} userId={userId} role={role} />
           <Routes>
             <Route exact path='/announcements' element={<AnnouncementPage userId={userId} />}/>
-            <Route exact path='/processes' element={<Process/>}/>
+            <Route exact path='/processes' element={<ProcessPage/>}/>
             <Route exact path='/candidacy-applications' element={<CandidacyApplication/>}/>
-            <Route exact path='/users' element={<User/>}/>
+            <Route exact path='/users' element={<UsersPage/>}/>
             <Route exact path='/profile' element={<Profile userId={userId} role={role}/>}/>
           </Routes>
         </BrowserRouter>

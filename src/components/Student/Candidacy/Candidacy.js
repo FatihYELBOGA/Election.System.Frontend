@@ -8,7 +8,8 @@ import "./Candidacy.css"
 import Button from '@mui/material/Button';
 
 
-function Candidacy(){
+function Candidacy(props){
+    const {userId} = props;
     const [file,setFile] = useState();
 
     const handleFile = (e) =>{
@@ -16,27 +17,59 @@ function Candidacy(){
        
     }
     const  handleApply = ()=>{
-        console.log(file);
+      const formData = new FormData();
+      formData.append('file', file);
+
+    fetch("https://iyte-election.azurewebsites.net/documents/"+userId,
+    {
+      method: "POST",
+      headers: {
+      "Content-Type": 'multipart/form-data'
+      },
+      body : formData
+    })
+    .then((res) => 
+      {
+        res.json();
+      })
+    .then(data => {
+        console.log(data)
+      })
+    .catch((err) => console.log(err))
     }
     
-
     return (
     <div className='container'>
         <Card className='candidacy-card' sx={{ marginTop: 15,borderRadius:5}}>
         <CardActionArea>
           <CardContent>
             <Typography sx={{textAlign:"center"}} gutterBottom variant="h5" component="div">
-              jkanfk
+              Documents for Departmental Representative Candidacy
+            </Typography>
+            <br />
+            <Typography variant="body2" color="text.secondary">
+              In order to be a department candidate, you must upload the following files to the system in zip format.
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              fkafska
+              - Student certificate
             </Typography>
-            <form onClick={handleApply}>
+            <Typography variant="body2" color="text.secondary">
+              - Grade Point Average (GPA)
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              - Criminal record
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              - Political party membership
+            </Typography>
+            <br/> <br/> <br/>
+            <form>
             <div style={{textAlign:"center"}}>
-            <span>Choose a file:</span>
+            <span>Choose a file: </span>
                 <input onClick={handleFile} disabled={false} type="file" name="archive" accept=".zip,.rar,.7z,.gz" />
             </div>
-            <Button sx={{}} variant='contained'>APPLY</Button>
+            <br />
+            <Button onClick={handleApply} sx={{width:"18%", marginLeft: "41%"}} variant='contained'>APPLY</Button>
             </form>
           </CardContent>
         </CardActionArea>

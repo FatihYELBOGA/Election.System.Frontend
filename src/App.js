@@ -53,7 +53,7 @@ function App()
           <Routes>
             <Route exact path='/announcements' element={<AnnouncementPage userId={userId} />}/>
             <Route exact path='/processes' element={<ProcessPage/>}/>
-            <Route exact path='/candidacy-applications' element={<CandidacyApplication/>}/>
+            <Route exact path='/candidacy-applications' element={<CandidacyApplication userId={userId} />}/>
             <Route exact path='/users' element={<UsersPage/>}/>
             <Route exact path='/profile' element={<Profile userId={userId} role={role}/>}/>
           </Routes>

@@ -1,7 +1,6 @@
 .candidacy-card{
     width: 50% !important;
-
-    
+    margin-left: 25%;
 }
 .container{
     display: flex !important;

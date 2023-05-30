@@ -14,28 +14,23 @@ function Candidacy(props){
 
     const handleFile = (e) =>{
         setFile(e.target.files[0]);
-       
+        console.log(file);
     }
     const  handleApply = ()=>{
-      const formData = new FormData();
-      formData.append('file', file);
 
-    fetch("https://iyte-election.azurewebsites.net/documents/"+userId,
-    {
-      method: "POST",
-      headers: {
-      "Content-Type": 'multipart/form-data'
-      },
-      body : formData
-    })
-    .then((res) => 
-      {
-        res.json();
+      const formData = new FormData();
+      formData.append("file", file);
+      console.log(file);
+
+      fetch("https://iyte-election.azurewebsites.net/documents/" + userId, {
+        method: "POST",
+        body: formData
       })
-    .then(data => {
-        console.log(data)
-      })
-    .catch((err) => console.log(err))
+        .then((res) => res.json()) 
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((err) => console.log(err));
     }
     
     return (
@@ -66,7 +61,7 @@ function Candidacy(props){
             <form>
             <div style={{textAlign:"center"}}>
             <span>Choose a file: </span>
-                <input onClick={handleFile} disabled={false} type="file" name="archive" accept=".zip,.rar,.7z,.gz" />
+                <input onChange={handleFile} disabled={false} type="file" name="archive" accept=".zip,.rar,.7z,.gz" />
             </div>
             <br />
             <Button onClick={handleApply} sx={{width:"18%", marginLeft: "41%"}} variant='contained'>APPLY</Button>

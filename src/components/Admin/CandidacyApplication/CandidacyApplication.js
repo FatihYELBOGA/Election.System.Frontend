@@ -8,7 +8,8 @@ import { Button, CardActionArea, Typography } from '@mui/material';
 
 function CandidacyApplication(){
     return(
-        <Card component="div"  variant='outlined'   sx={{ marginTop: 15,width:"35%",maxWidth:"500px",display:"flex !important",justifyContent:"center"}}>
+      <div></div>
+        /*<Card component="div"  variant='outlined'   sx={{ marginTop: 15,width:"35%",maxWidth:"500px",display:"flex !important",justifyContent:"center"}}>
         <CardActionArea disableTouchRipple disableRipple sx={{cursor:"default"}} >
           
           <CardContent>
@@ -37,7 +38,7 @@ function CandidacyApplication(){
             
           </CardContent>
         </CardActionArea>
-      </Card>
+      </Card>*/
     );
 
 }

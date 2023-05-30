@@ -20,26 +20,28 @@ function Candidacy(props){
 
     const handleFile = (e) =>{
         setFile(e.target.files[0]);
-        console.log(file);
     }
+
     const  handleApply = ()=>{
 
       const formData = new FormData();
-      formData.append("file", file);
-      console.log(file);
+      formData.append("StudentId", userId);
+      formData.append("Process", "DEPARTMENT_REPRESENTATIVE");
+      formData.append("File", file);
 
-      fetch("https://iyte-election.azurewebsites.net/documents/" + userId, {
+      fetch("https://iyte-election.azurewebsites.net/documents", {
         method: "POST",
         body: formData
       })
         .then((res) => res.json()) 
         .then((data) => {
           console.log(data);
+          alert("Document sent succesfully!");
         })
         .catch((err) => console.log(err));
     }
-    if(isStart){
-      if(!isApply){
+ //   if(isStart){
+ //     if(!isApply){
           return (
 
           <div className='container'>
@@ -81,9 +83,9 @@ function Candidacy(props){
           </div>
             
           );
-      }
+      //}
 
-      else{
+      /*else{
         return(<div className='container'>
         <Card  sx={{ marginTop: 15,borderRadius:5,width:"30%",marginLeft:"35%"}}>
         <CardActionArea disableTouchRipple disableRipple sx={{cursor:"default"}} >
@@ -120,7 +122,7 @@ function Candidacy(props){
       </div>
       );
       
-    }
+    }*/
 }
 
 export default Candidacy;

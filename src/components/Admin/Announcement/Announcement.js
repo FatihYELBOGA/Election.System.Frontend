@@ -81,7 +81,7 @@ function Announcement(props) {
 
   return (
     <Card className="announcement-card" id={announcementId} sx={{ marginTop: 7,marginBottom:5 }}>
-      <CardActionArea>
+      <CardActionArea disableTouchRipple disableRipple sx={{cursor:"default"}} >
         <CardMedia component="img" height="140" image={Img} alt="green iguana" />
         <CardContent>
           {isEditing ? (

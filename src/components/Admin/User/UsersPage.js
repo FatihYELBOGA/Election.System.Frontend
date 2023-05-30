@@ -61,7 +61,7 @@ function UsersPage(props) {
     );
   } else {
     return (
-      <div className="container">
+      <div className="container-user">
         <div className="search-bar">
           <form onSubmit={handleSearch}>
             <input
@@ -77,7 +77,7 @@ function UsersPage(props) {
           </form>
         </div>
 
-        <div className="container-announcement">
+        <div className="container-user">
           <div fixed="true" className="announcement">
             {studentList.map((student) => (
               <User

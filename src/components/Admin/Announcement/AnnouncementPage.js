@@ -49,7 +49,7 @@ function AnnouncementPage(props)
     } else {
         return (
             <div>
-                {isAdded ?  (<div className="container">
+                {isAdded ?  (<div className="container-announcement">
                     <div className="button"><IconButton  sx={{backgroundColor:"#B61815",padding:0,margin:8,height:50,width:50}} onClick={(e) => setIsAdded(false)} aria-label="delete">
                         <RemoveIcon sx={{color:"white"}}/>
                 </IconButton>

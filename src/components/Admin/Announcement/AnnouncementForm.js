@@ -49,7 +49,7 @@ function AnnouncementForm(props) {
 
   return (
     <Card className='announcement-card' sx={{ marginTop: 15, display: "flex", justifyContent: "center",borderRadius:5 }}>
-      <CardActionArea>
+      <CardActionArea disableTouchRipple disableRipple sx={{cursor:"default"}} >
         
         <CardContent sx={{ display: "block", justifyContent: "center" }}>
           <form>

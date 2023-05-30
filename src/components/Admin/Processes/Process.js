@@ -99,7 +99,7 @@ function Process(props){
         return(
 
             <Card className='process-card' id={processId}  sx={{ marginTop: 8,marginBottom:7,width:"51%"}}>
-                <CardActionArea>
+                <CardActionArea disableTouchRipple disableRipple sx={{cursor:"default"}} >
                   <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
                     {processName.replace("_"," ")}

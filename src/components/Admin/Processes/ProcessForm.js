@@ -68,7 +68,7 @@ function ProcessForm(props){
     return(
 
     <Card className='process-card'  sx={{ marginTop: 15, display: "flex", justifyContent: "center",borderRadius:5,width:"60%" }}>
-        <CardActionArea>
+        <CardActionArea disableTouchRipple disableRipple sx={{cursor:"default"}} >
           <CardContent sx={{ display: "block", justifyContent: "center" }}>
             <form>
             <div style={{textAlign:"center",justifyContent:"center",marginTop:20,marginLeft:"15%",width:"100%"}}>

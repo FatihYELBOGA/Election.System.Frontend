@@ -54,7 +54,10 @@ function Login (props)
     <div className="login-page">
       <div className="login-head">
         <h2>IYTE Election System</h2>
+        
       </div>
+      <p style={{fontSize:"12px",marginBottom:"20px"}}>Please enter your IYTE Zimbra mail and password to login.</p>
+
       <form onSubmit={handleSubmit}>
         <div className="form-group">
          
@@ -76,6 +79,8 @@ function Login (props)
             required
           />
         </div>
+        <div style={{marginBottom:15,display:"flex",justifyContent:"right"}}><a href="https://mail-app.iyte.edu.tr/ForgotMyPassword/"> Forget Password</a></div>
+
         <button type="submit">LOGIN</button>
       </form>
     </div>

@@ -13,6 +13,7 @@ function Candidacy(props){
     const [file,setFile] = useState();
     const [isStart,setIsStart] = useState(false);
     const [isApply,setIsApply] = useState(true);
+    const [documentType, setDocumentType] = useState();
 
     const handleCancel= (e) =>{
 
@@ -27,6 +28,7 @@ function Candidacy(props){
       const formData = new FormData();
       formData.append("StudentId", userId);
       formData.append("Process", "DEPARTMENT_REPRESENTATIVE");
+      formData.append("Document", documentType);
       formData.append("File", file);
 
       fetch("https://iyte-election.azurewebsites.net/documents", {

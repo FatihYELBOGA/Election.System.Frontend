@@ -25,11 +25,12 @@
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 10px;
+  margin-left: 5px;
 }
   
 .login-page button[type="submit"] {
   display: block;
-  width: 100%;
+  width: 99%;
   padding: 10px;
   background-color: #B61815;
   color: #fff;

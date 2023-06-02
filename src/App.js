@@ -7,7 +7,7 @@ import Vote from './components/Student/Vote/Vote'
 import Candidacy from './components/Student/Candidacy/Candidacy'
 import Profile from './components/Profile/Profile'
 import AnnouncementPage from './components/Admin/Announcement/AnnouncementPage'
-import CandidacyApplication from './components/Admin/CandidacyApplication/CandidacyApplication';
+import CandidacyAppPage from './components/Admin/CandidacyApplication/CandidacyAppPage';
 import ProcessPage from './components/Admin/Processes/ProcessPage';
 import UsersPage from './components/Admin/User/UsersPage';
 import { useState } from 'react';
@@ -53,7 +53,7 @@ function App()
           <Routes>
             <Route exact path='/announcements' element={<AnnouncementPage userId={userId} />}/>
             <Route exact path='/processes' element={<ProcessPage/>}/>
-            <Route exact path='/candidacy-applications' element={<CandidacyApplication userId={userId} />}/>
+            <Route exact path='/candidacy-applications' element={<CandidacyAppPage userId={userId} />}/>
             <Route exact path='/users' element={<UsersPage/>}/>
             <Route exact path='/profile' element={<Profile userId={userId} role={role}/>}/>
           </Routes>

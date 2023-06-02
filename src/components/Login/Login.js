@@ -79,9 +79,8 @@ function Login (props)
             required
           />
         </div>
-        <div style={{marginBottom:15,display:"flex",justifyContent:"right"}}><a href="https://mail-app.iyte.edu.tr/ForgotMyPassword/"> Forget Password</a></div>
-
         <button type="submit">LOGIN</button>
+        <div style={{marginTop:5,marginRight:5,display:"flex",justifyContent:"right"}}><a href="https://mail-app.iyte.edu.tr/ForgotMyPassword/"> Forget Password</a></div>
       </form>
     </div>
   );

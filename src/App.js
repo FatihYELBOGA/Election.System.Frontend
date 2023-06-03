@@ -37,7 +37,7 @@ function App()
         <NavBar setUserId={setUserId} userId={userId} role={role} />
           <Routes>
             <Route exact path='/home' element={<Home />}/>
-            <Route exact path='/voting' element={<Vote/>}/>
+            <Route exact path='/voting' element={<Vote userId={userId}/>}/>
             <Route exact path='/candidacy-application' element={<Candidacy userId={userId}/>}/>
             <Route exact path='/profile' element={<Profile userId={userId} role={role} />}/>
           </Routes>

@@ -112,7 +112,7 @@ function DocumentView(props) {
                 </a>
               )}
             </div>
-            <div style={{ marginLeft:"35%",width:"30%", textAlign: "center",border:"1px solid",borderRadius:5,padding:5 }}>
+            <div style={{ marginLeft:"40%",width:100 ,textAlign: "center",border:"1px solid",borderRadius:5,padding:5 }}>
               {document.controlStatus}
             </div>
             

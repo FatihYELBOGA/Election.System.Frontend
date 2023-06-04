@@ -12,6 +12,8 @@ function Vote(props) {
   const [studentList,setStudentList] = useState([]);
   const [voteId,setVoteId] = useState(0);
   const [departmentCandidateList, setDepartmentCandidateList] = useState([]);
+  const [isActive,setIsActive] = useState(false);
+  const [futureProcess,setFutureProcess] = useState();
 
   const handleIsVoted = () =>{
     fetch("https://iyte-election.azurewebsites.net/election/"+userId)
@@ -69,6 +71,14 @@ function Vote(props) {
         
         setDepartmentCandidateList(newArray);
   };
+
+  const handleActiveProcess = (e) =>{
+
+  }
+
+  const handleFutureProcess = (e) =>{
+
+  }
   
   
 

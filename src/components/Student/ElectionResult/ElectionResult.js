@@ -11,21 +11,9 @@ function ElectionResult(props) {
   const [student,setStudent] = useState();
   const [studentList,setStudentList] = useState([]);
   const [voteId,setVoteId] = useState(0);
+  const [departmentCandidateList, setDepartmentCandidateList] = useState([]);
 
 
-  const handleIsVoted = () =>{
-    fetch("https://iyte-election.azurewebsites.net/election/"+userId)
-    .then((res) => res.json())
-    .then(
-      (result) => {
-        setVoteId(result.id);
-      },
-      (error) => {
-        console.log(error);
-       
-      }
-    );
-  }
 
   const refreshPosts = () => {
     fetch("https://iyte-election.azurewebsites.net/students/"+userId)
@@ -65,14 +53,14 @@ function ElectionResult(props) {
       const newArray = studentList.filter((candidate) =>
           candidate.department.name === student.department.name
         );
-        setStudentList(newArray);
+        setDepartmentCandidateList(newArray);
   };
   
   
 
   useEffect(() => {
     refreshPosts();
-    handleIsVoted();
+
   }, [voteId]);
 
 
@@ -90,7 +78,7 @@ function ElectionResult(props) {
             
             
           <div fixed="true" className="announcement">
-            {studentList.map((candidate) => (
+            {departmentCandidateList.map((candidate) => (
               <Candidate type="election-result" voteId={voteId} student={candidate} setVoteId={setVoteId} userId={userId}/>
             ))}
           </div>

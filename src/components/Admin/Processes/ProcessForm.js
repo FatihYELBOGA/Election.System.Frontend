@@ -11,6 +11,8 @@ function ProcessForm(props){
     const {userId} = props;
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
+    const [startTime,setStartTime] = useState("00:00")
+    const [endTime,setEndTime] = useState("00:00")
     const [process,setProcess] = useState("");
     const [processNames,setProcessNames] = useState([]);
 
@@ -34,8 +36,8 @@ function ProcessForm(props){
           },
           body: JSON.stringify({
             processType : process,
-            startDate: startDate,
-            endDate: endDate,
+            startDate: startDate+"-"+startTime.replace(":","-")+"-0",
+            endDate: endDate+"-"+endTime.replace(":","-")+"-0",
             administrationId: userId,
           }),
         })
@@ -71,13 +73,13 @@ function ProcessForm(props){
         <CardActionArea disableTouchRipple disableRipple sx={{cursor:"default"}} >
           <CardContent sx={{ display: "block", justifyContent: "center" }}>
             <form>
-            <div style={{textAlign:"center",justifyContent:"center",marginTop:20,marginLeft:"15%",width:"100%"}}>
+            <div style={{textAlign:"center",justifyContent:"center",marginTop:20,marginLeft:"25%",width:"100%"}}>
             <Autocomplete
             disablePortal
             onChange={(e,value) => setProcess(value)}
             id="combo-box-demo"
             options={processNames}
-            sx={{ width: "70%" }}
+            sx={{ width: "50%" }}
             renderInput={(params) => <TextField {...params} label="Process Types" />}
             />
             </div>
@@ -87,8 +89,14 @@ function ProcessForm(props){
                   value={startDate}
                   type='date'
                   onChange={handleChangeStartDate}
-                  style={{ width: "70%", height: 35,fontSize:18,textAlign:"center" }}
+                  style={{ width: "50%", height: 35,fontSize:18,textAlign:"center" }}
                 />
+                <input
+                style={{ width: "50%", height: 35,fontSize:18,textAlign:"center" }}
+                type='time'
+                required
+                onChange={(e) => {setStartTime(e.target.value)}}/>
+              
               </div>
               <div style={{  }}>
                 <h4 style={{marginBottom:5}}>Finish Date</h4>
@@ -97,8 +105,13 @@ function ProcessForm(props){
                   value={endDate}
                   type='date'
                   onChange={handleChangeFinishDate}
-                  style={{ width: "70%", height: 35,fontSize:18,textAlign:"center" }}
+                  style={{ width: "50%", height: 35,fontSize:18,textAlign:"center" }}
                 />
+                <input
+                style={{ width: "50%", height: 35,fontSize:18,textAlign:"center" }}
+                type='time'
+                onChange={(e)=> setEndTime(e.target.value)}
+                required/>
               </div>
            
             <div style={{ marginTop: 40,marginBottom: 20 }}>

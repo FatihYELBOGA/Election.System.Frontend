@@ -15,7 +15,8 @@ function Process(props){
     const [isEditing,setIsEditing] = useState(false);
     const [editStartDate,setStartDate]= useState(startDate.split("T")[0]);
     const [editEndDate,setEndDate] = useState(endDate.split("T")[0]);
-
+    const [editStartTime,setEditStartTime] = useState(startDate.split("T")[1]);
+    const [editEndTime,setEditEndTime] = useState(endDate.split("T")[1]);
     const [editProcess,setEditProcess] = useState(processName);
     const [processNames,setProcessNames] = useState([]);
 
@@ -58,6 +59,8 @@ function Process(props){
           setEditProcess(processName);
           setStartDate(startDate.split("T")[0]);
           setEndDate(endDate.split("T")[0]);
+          setEditEndTime(endDate.split("T")[1]);
+          setEditStartTime(startDate.split("T")[1]);
       };
     const handleDelete = () => {
         fetch("https://iyte-election.azurewebsites.net/processes/"+processId,{
@@ -135,14 +138,14 @@ function Process(props){
         <CardActionArea>
           <CardContent sx={{ display: "block", justifyContent: "center" }}>
             <form>
-            <div style={{textAlign:"center",justifyContent:"center",marginTop:20,marginLeft:"15%",width:"100%"}}>
+            <div style={{textAlign:"center",justifyContent:"center",marginTop:20,marginLeft:"25%",width:"100%"}}>
             <Autocomplete
             disablePortal
             onChange={(e,value) => setEditProcess(value)}
             id="combo-box-demo"
             options={processNames}
             value={processName}
-            sx={{ width: "70%" }}
+            sx={{ width: "50%" }}
             renderInput={(params) => <TextField {...params} label="Process Types" />}
             />
             </div>
@@ -152,8 +155,14 @@ function Process(props){
                   value={editStartDate}
                   type='date'
                   onChange={handleChangeStartDate}
-                  style={{ width: "70%", height: 35,fontSize:18,textAlign:"center" }}
+                  style={{ width: "50%", height: 35,fontSize:18,textAlign:"center" }}
                 />
+                <input
+                  style={{ width: "50%", height: 35,fontSize:18,textAlign:"center" }}
+                  type='time'
+                  value={editStartTime}
+                  onChange={(e)=> setEditStartTime(e.target.value)}
+                  required/>
               </div>
               <div style={{  }}>
                 <h4 style={{marginBottom:5}}>Finish Date</h4>
@@ -162,8 +171,15 @@ function Process(props){
                   value={editEndDate}
                   type='date'
                   onChange={handleChangeFinishDate}
-                  style={{ width: "70%", height: 35,fontSize:18,textAlign:"center" }}
+                  style={{ width: "50%", height: 35,fontSize:18,textAlign:"center" }}
                 />
+                <input
+                  style={{ width: "50%", height: 35,fontSize:18,textAlign:"center" }}
+                  type='time'
+                  onChange={(e)=> setEditEndTime(e.target.value)}
+                  value={editEndTime}
+                  required/>
+
               </div>
            
               <div className="buttons" style={{display: "flex",justifyContent:"center",marginTop:30,marginBottom:20}}>

@@ -11,6 +11,7 @@ import CandidacyAppPage from './components/Admin/CandidacyApplication/CandidacyA
 import ProcessPage from './components/Admin/Processes/ProcessPage';
 import UsersPage from './components/Admin/User/UsersPage';
 import { useState } from 'react';
+import ElectionResult from './components/Student/ElectionResult/ElectionResult';
 
 function App() 
 {
@@ -40,6 +41,7 @@ function App()
             <Route exact path='/voting' element={<Vote userId={userId}/>}/>
             <Route exact path='/candidacy-application' element={<Candidacy userId={userId}/>}/>
             <Route exact path='/profile' element={<Profile userId={userId} role={role} />}/>
+            <Route exact path='/election-result' element={<ElectionResult userId={userId}/>}/>
           </Routes>
         </BrowserRouter>
       </div>

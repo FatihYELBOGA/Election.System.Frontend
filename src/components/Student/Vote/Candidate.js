@@ -8,7 +8,6 @@ import { Button, CardActionArea } from '@mui/material';
 
 function Candidate(props){
     const {student,setVoteId,voteId,userId} = props;
-    const [isCheck,setIsCheck] = useState(false)
     
     const handleVote = (e) =>{
       e.preventDefault();

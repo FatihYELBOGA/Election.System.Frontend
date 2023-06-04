@@ -2,9 +2,6 @@ import React, { useState, useEffect } from "react";
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import Candidate from "./Candidate"
-import { Button } from "@mui/material";
-
-
 
 
 function Vote(props) {
@@ -14,12 +11,14 @@ function Vote(props) {
   const [student,setStudent] = useState();
   const [studentList,setStudentList] = useState([]);
   const [voteId,setVoteId] = useState(0);
+  const [departmentCandidateList, setDepartmentCandidateList] = useState([]);
 
   const handleIsVoted = () =>{
     fetch("https://iyte-election.azurewebsites.net/election/"+userId)
     .then((res) => res.json())
     .then(
       (result) => {
+        console.log(result)
         setVoteId(result.id);
       },
       (error) => {
@@ -48,7 +47,7 @@ function Vote(props) {
 
   const getCandidateList = (e) => {
     const formData = new FormData();
-    formData.append("process", "DEPARTMENT_REPRESENTATIVE");
+    formData.append("process", "DEPARTMENT_CANDIDACY");
     
     const queryParams = new URLSearchParams(formData).toString();
     const url = `https://iyte-election.azurewebsites.net/candidates?${queryParams}`;
@@ -58,7 +57,7 @@ function Vote(props) {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data[0].department)
+       
         setStudentList(data)
         
       })
@@ -67,7 +66,8 @@ function Vote(props) {
       const newArray = studentList.filter((candidate) =>
           candidate.department.name === student.department.name
         );
-        setStudentList(newArray);
+        
+        setDepartmentCandidateList(newArray);
   };
   
   
@@ -92,8 +92,8 @@ function Vote(props) {
             
             
           <div fixed="true" className="announcement">
-            {studentList.map((candidate) => (
-              <Candidate voteId={voteId} student={candidate} setVoteId={setVoteId} userId={userId}/>
+            {departmentCandidateList.map((candidate) => (
+              <Candidate type="voting" voteId={voteId} student={candidate} setVoteId={setVoteId} userId={userId}/>
             ))}
           </div>
           

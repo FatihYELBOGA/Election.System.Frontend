@@ -7,7 +7,7 @@ import { Button, CardActionArea } from '@mui/material';
 
 
 function Candidate(props){
-    const {student,setVoteId,voteId,userId} = props;
+    const {type,student,setVoteId,voteId,userId} = props;
     
     const handleVote = (e) =>{
       e.preventDefault();
@@ -26,6 +26,7 @@ function Candidate(props){
         .catch((err) => console.log(err));
       setVoteId(student.id);
     }
+    if(type === "voting"){
     if(voteId === 0){
       return(
         <Card  id={student.id} sx={{ marginTop: 2,marginBottom: 2,width:"300px"}}>
@@ -63,15 +64,31 @@ function Candidate(props){
                 {(voteId === student.id) ? (<div style={{marginTop:10,justifyContent:"center",display:"flex"}}>
                   <Button disabled={true}  sx={{backgroundColor:""}} >VOTED</Button>
                   </div>) : (<div style={{marginTop:10,justifyContent:"center",display:"flex"}}>
-                    <Button disabled={true} variant='' sx={{backgroundColor:"#"}} >-</Button></div>)}
-                
-                
-               
+                    <Button disabled={true} variant='' sx={{backgroundColor:"#"}} >-</Button></div>)}        
               </CardContent>
             </CardActionArea>
           </Card>
         );
     }
+  }else{
+    return(
+      <Card  id={student.id} sx={{ marginTop: 2,marginBottom: 2,width:"300px"}}>
+          <CardActionArea disableTouchRipple disableRipple sx={{cursor:"default"}} >
+            <CardContent>
+              <Typography sx={{justifyContent:"center",marginBottom:2}} gutterBottom variant="h5" component="div">
+                {student.firstName+" "+student.lastName}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                
+              </Typography>
+             <div>
+              VOTE
+              </div>  
+            </CardContent>
+          </CardActionArea>
+        </Card>
+      );
+  }
     
 }
 export default Candidate;

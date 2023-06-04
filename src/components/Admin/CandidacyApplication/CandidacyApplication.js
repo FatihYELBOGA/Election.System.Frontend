@@ -19,7 +19,7 @@ function CandidacyApplication(props)
 
     const checkIsCandidate = () =>{
       const formData = new FormData();
-      formData.append("process", "DEPARTMENT_REPRESENTATIVE");
+      formData.append("process", "DEPARTMENT_CANDIDACY");
       
       const queryParams = new URLSearchParams(formData).toString();
       const url = `https://iyte-election.azurewebsites.net/candidates?${queryParams}`;

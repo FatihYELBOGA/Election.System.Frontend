@@ -120,10 +120,10 @@ function CandidacyApplication(props)
     },[isCandidate])
     if(isDetailed){
         return (
-            <Card  id={student.id} sx={{ marginTop: 10,marginBottom:10,width:"51%",marginRight:"25%",marginLeft:"25%"}}>
+            <Card  id={student.id} sx={{ marginTop: 10,marginBottom:10,width:"51%",marginRight:"25%",marginLeft:"25%",borderRadius:5}}>
               <CardActionArea disableTouchRipple disableRipple sx={{cursor:"default"}} >
                 <CardContent>
-                  <Typography sx={{display:"flex",justifyContent:"center",marginBottom:2}} gutterBottom variant="h5" component="div">
+                  <Typography sx={{display:"flex",justifyContent:"center",marginTop:2,marginBottom:2}} gutterBottom variant="h5" component="div">
                     {student.firstName+" "+student.lastName}
                   </Typography>
                   <div >
@@ -167,7 +167,8 @@ function CandidacyApplication(props)
 
     }else{
     return (
-      <Card  id={student.id} sx={{ marginTop: 10,marginBottom: 10,marginRight:5,marginLeft:5}}>
+    
+      <Card  id={student.id} sx={{ display:"flex",marginTop: 10,marginBottom: 0,marginRight:5,marginLeft:5,width:"31%",borderRadius:3,justifyContent:"center",textAlign:"center"}}>
         <CardActionArea disableTouchRipple disableRipple sx={{cursor:"default"}} >
           <CardContent>
             <Typography sx={{justifyContent:"center",marginBottom:2}} gutterBottom variant="h5" component="div">
@@ -177,7 +178,7 @@ function CandidacyApplication(props)
               {student.username}
             </Typography>
             <div style={{marginTop:10,justifyContent:"space-between",display:"flex"}}>
-            <Button onClick={handleDetail} sx={{fontSize:11}} size="small">Detail</Button>
+            <Button onClick={handleDetail} sx={{fontSize:13}} size="small">Detail</Button>
             </div>
           </CardContent>
         </CardActionArea>

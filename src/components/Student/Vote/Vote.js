@@ -20,7 +20,7 @@ function Vote(props) {
     .then((res) => res.json())
     .then(
       (result) => {
-        console.log(result)
+      
         setVoteId(result.id);
       },
       (error) => {
@@ -61,7 +61,6 @@ function Vote(props) {
       .then((data) => {
        
         setStudentList(data)
-        console.log(data)
         
       })
       .catch((err) => console.log(err));

@@ -70,7 +70,7 @@ function User(props)
     }
     if(isEdit){
         return (
-            <Card  id={studentId} sx={{ display: "block",marginTop: 10,margin:10,width:"30%",height:"auto",marginRight:"30%",marginLeft:"30%"}}>
+            <Card  id={studentId} sx={{ display: "block",marginTop: 10,margin:10,width:"30%",height:"auto",marginRight:"30%",marginLeft:"30%",borderRadius:3}}>
               <CardActionArea disableTouchRipple disableRipple sx={{cursor:"default"}} >
                 <CardContent>
                   <Typography sx={{justifyContent:"center",marginBottom:2}} gutterBottom variant="h5" component="div">
@@ -101,7 +101,7 @@ function User(props)
 
     }else if(isDetailed){
         return (
-            <Card  id={studentId} sx={{ marginTop: 10,marginBottom:10,width:"40%",marginRight:"30%",marginLeft:"30%"}}>
+            <Card  id={studentId} sx={{ marginTop: 10,marginBottom:10,width:"40%",marginRight:"30%",marginLeft:"30%",borderRadius:3}}>
               <CardActionArea disableTouchRipple disableRipple sx={{cursor:"default"}} >
                 <CardContent>
                   <Typography sx={{justifyContent:"center",marginBottom:2}} gutterBottom variant="h5" component="div">
@@ -125,7 +125,7 @@ function User(props)
 
     }else{
     return (
-      <Card  id={studentId} sx={{ marginTop: 10,marginBottom: 10,marginRight:5,marginLeft:5}}>
+      <Card  id={studentId} sx={{ marginTop: 10,marginBottom: 0,marginRight:5,marginLeft:5,width:"31%",borderRadius:3}}>
         <CardActionArea disableTouchRipple disableRipple sx={{cursor:"default"}} >
           <CardContent>
             <Typography sx={{justifyContent:"center",marginBottom:2}} gutterBottom variant="h5" component="div">
@@ -138,8 +138,8 @@ function User(props)
               {editRole.replace("_"," ")}
             </Typography>
             <div style={{marginTop:10,justifyContent:"space-between",display:"flex"}}>
-            <Button onClick={handleDetail} sx={{fontSize:11}} size="small">Detail</Button>
-            <Button onClick={handleEdit}><EditIcon sx={{color:"black",fontSize:"20px",marginLeft:2}} /></Button>
+            <Button onClick={handleDetail} sx={{fontSize:13}} size="small">Detail</Button>
+            <Button onClick={handleEdit}><EditIcon sx={{color:"black",fontSize:"25px",marginLeft:2}} /></Button>
             </div>
            
           </CardContent>

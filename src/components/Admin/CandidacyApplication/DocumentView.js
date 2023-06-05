@@ -80,7 +80,7 @@ function DocumentView(props) {
 
   return (
     <div className='' style={{ textAlign: "center", display: "flex", justifyContent: "center" }}>
-      <Card className='' sx={{ marginBottom: 2, borderRadius: 0, width: "90%",maxWidth:"600px" }}>
+      <Card className='' sx={{ marginBottom: 2, borderRadius: 0, width: "90%",maxWidth:"600px",borderRadius:5 }}>
         <CardActionArea disableTouchRipple disableRipple sx={{ cursor: "default", justifyContent: "center" }}>
           <CardContent>
         
@@ -89,12 +89,12 @@ function DocumentView(props) {
             {(editControlStatus === "APPROVED" ) ? 
             
             (<Button disabled={true} sx={{padding:0,marginLeft:"18%"}}>
-                <DoneIcon sx={{color:"green",fontSize:"25px"}} />
+                <DoneIcon sx={{color:"green",fontSize:"25px",marginLeft:4}} />
                 </Button>):
             
             ((editControlStatus === "DENIED") ? 
                 (<Button disabled={true}  sx={{padding:0,marginLeft:"18%"}}>
-                    <CloseIcon sx={{color:"red",fontSize:"25px"}} />
+                    <CloseIcon sx={{color:"red",fontSize:"25px",marginLeft:4}} />
                     </Button>) : 
                 (<div>
                     <Button onClick={handleApprove} sx={{padding:0,marginLeft:"18%"}}>

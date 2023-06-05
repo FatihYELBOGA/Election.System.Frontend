@@ -129,7 +129,7 @@ function Candidacy(props){
     <Card  sx={{ marginTop: 15,borderRadius:5,width:"50%",marginLeft:"25%"}}>
     <CardActionArea disableTouchRipple disableRipple sx={{cursor:"default"}} >
       <CardContent>
-        <Typography sx={{textAlign:"center"}} gutterBottom variant="h5" component="div">
+        <Typography sx={{textAlign:"center",marginTop:2}} gutterBottom variant="h5" component="div">
           Documents for Departmental Representative Candidacy
         </Typography>
         <br />

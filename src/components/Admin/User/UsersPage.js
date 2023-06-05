@@ -71,8 +71,8 @@ function UsersPage(props) {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
-            <Button type="submit">
-              <SearchIcon />
+            <Button  disabled={true} type="submit">
+              <SearchIcon sx={{fontSize:31}} />
             </Button>
           </form>
         </div>

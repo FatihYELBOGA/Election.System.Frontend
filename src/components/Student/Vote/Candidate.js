@@ -7,7 +7,7 @@ import { Button, CardActionArea } from '@mui/material';
 
 
 function Candidate(props){
-    const {type,student,setVoteId,voteId,userId} = props;
+    const {type,student,setVoteId,voteId,userId,isFinished,numberOfVotes} = props;
     
     const handleVote = (e) =>{
       e.preventDefault();
@@ -26,65 +26,74 @@ function Candidate(props){
         .catch((err) => console.log(err));
       setVoteId(student.id);
     }
-    console.log("")
     if(type === "voting"){
-    if(voteId === 0){
-      return(
-        <Card  id={student.id} sx={{ marginTop: 2,marginBottom: 2,width:"300px"}}>
-            <CardActionArea disableTouchRipple disableRipple sx={{cursor:"default"}} >
-              <CardContent>
-                <Typography sx={{justifyContent:"center",marginBottom:2}} gutterBottom variant="h5" component="div">
-                  {student.firstName+" "+student.lastName}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
+        if(voteId === 0){
+          return(
+            <Card  id={student.id} sx={{ marginTop: 20,marginRight:10,marginLeft:10,marginBottom: 2,width:"400px",borderRadius:5}}>
+                <CardActionArea disableTouchRipple disableRipple sx={{cursor:"default"}} >
+                  <CardContent>
+                  <Typography sx={{justifyContent:"center",marginBottom:2,fontSize:30}} gutterBottom variant="h5" component="div">
+                      {student.firstName+" "+student.lastName}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {student.gender}
+                    </Typography>
+                    <Typography sx={{marginTop:1}} variant="body2" color="text.secondary">
+                    {student.department.name}
+                    </Typography>
+                    
+                    <div style={{marginTop:10,justifyContent:"center",display:"flex"}}>
+        
+                      
+                      <Button onClick={handleVote} variant='contained' sx={{backgroundColor:"#B61815"}} >VOTE</Button>
+                    
+                    </div>
                   
-                </Typography>
-                
-                <div style={{marginTop:10,justifyContent:"center",display:"flex"}}>
-    
-                  
-                  <Button onClick={handleVote} variant='contained' sx={{backgroundColor:"#B61815"}} >VOTE</Button>
-                 
-                </div>
-               
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        );
-    }else{
-      return(
-        <Card  id={student.id} sx={{ marginTop: 2,marginBottom: 2,width:"300px"}}>
-            <CardActionArea disableTouchRipple disableRipple sx={{cursor:"default"}} >
-              <CardContent>
-                <Typography sx={{justifyContent:"center",marginBottom:2}} gutterBottom variant="h5" component="div">
-                  {student.firstName+" "+student.lastName}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  
-                </Typography>
-                {(voteId === student.id) ? (<div style={{marginTop:10,justifyContent:"center",display:"flex"}}>
-                  <Button disabled={true}  sx={{backgroundColor:""}} >VOTED</Button>
-                  </div>) : (<div style={{marginTop:10,justifyContent:"center",display:"flex"}}>
-                    <Button disabled={true} variant='' sx={{backgroundColor:"#"}} >-</Button></div>)}        
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        );
-    }
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            );
+        }else{
+          return(
+            <Card  id={student.id} sx={{ marginTop: 20,marginRight:10,marginLeft:10,marginBottom: 2,width:"400px",borderRadius:5}}>
+                <CardActionArea disableTouchRipple disableRipple sx={{cursor:"default"}} >
+                  <CardContent>
+                    <Typography sx={{justifyContent:"center",marginBottom:2,fontSize:30}} gutterBottom variant="h5" component="div">
+                      {student.firstName+" "+student.lastName}
+                    </Typography>
+                    
+                    <Typography sx={{marginTop:1}} variant="body2" color="text.secondary">
+                    {student.department.name}
+                    </Typography>
+                    {(voteId === student.id) ? (<div style={{marginTop:10,justifyContent:"center",display:"flex"}}>
+                      <Button disabled={true}  sx={{fontSize:25,color:"#B61815 !important"}} >VOTED</Button>
+                      </div>) : (<div style={{marginTop:10,justifyContent:"center",display:"flex"}}>
+                        <Button disabled={true} variant='' sx={{fontSize:25,color:"#B61815 !important"}} >-</Button></div>)}        
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            );
+        }
   }else{
     return(
-      <Card  id={student.id} sx={{ marginTop: 2,marginBottom: 2,width:"300px"}}>
+      <Card  id={student.id} sx={{ marginTop: 20,marginRight:10,marginLeft:10,marginBottom: 2,width:"400px",borderRadius:5}}>
           <CardActionArea disableTouchRipple disableRipple sx={{cursor:"default"}} >
             <CardContent>
-              <Typography sx={{justifyContent:"center",marginBottom:2}} gutterBottom variant="h5" component="div">
-                {student.firstName+" "+student.lastName}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                
-              </Typography>
-             <div>
-              VOTE
-              </div>  
+            <Typography sx={{justifyContent:"center",marginBottom:2,fontSize:30}} gutterBottom variant="h5" component="div">
+                  {student.firstName+" "+student.lastName}
+                </Typography>
+                <Typography sx={{marginTop:1, marginBottom:5}} variant="body2" color="text.secondary">
+                {student.department.name}
+                </Typography>
+                {(isFinished) ? (<div style={{fontSize:25,color:"#B61815"}}>
+                  Number of Votes
+              <p style={{margin:0,marginTop:5,fontSize:50}}>{numberOfVotes}</p>
+              </div>
+
+                ) : (<div>
+                  VOTE
+                  </div>)}
+               
             </CardContent>
           </CardActionArea>
         </Card>

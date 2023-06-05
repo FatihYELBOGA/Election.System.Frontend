@@ -61,6 +61,7 @@ function Vote(props) {
       .then((data) => {
        
         setStudentList(data)
+        console.log(data)
         
       })
       .catch((err) => console.log(err));
@@ -85,7 +86,7 @@ function Vote(props) {
   useEffect(() => {
     refreshPosts();
     handleIsVoted();
-  }, [voteId]);
+  }, [voteId,departmentCandidateList]);
 
 
   if (error) {

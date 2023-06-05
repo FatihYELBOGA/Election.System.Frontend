@@ -12,7 +12,7 @@ function ElectionResult(props) {
   const [studentList,setStudentList] = useState([]);
   const [voteId,setVoteId] = useState(0);
   const [departmentCandidateList, setDepartmentCandidateList] = useState([]);
-
+  const [isActive,setIsActive] = useState(false);
 
 
   const refreshPosts = () => {
@@ -55,13 +55,19 @@ function ElectionResult(props) {
         );
         setDepartmentCandidateList(newArray);
   };
-  
-  
 
+  const handleActiveProcess = (e) =>{
+
+  }
+
+  const handlePastProcess = (e) =>{
+
+  }
+  
   useEffect(() => {
     refreshPosts();
 
-  }, [voteId]);
+  }, [voteId,departmentCandidateList]);
 
 
   if (error) {

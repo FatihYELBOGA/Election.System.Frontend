@@ -26,6 +26,7 @@ function Candidate(props){
         .catch((err) => console.log(err));
       setVoteId(student.id);
     }
+    console.log("")
     if(type === "voting"){
     if(voteId === 0){
       return(

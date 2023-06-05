@@ -75,10 +75,9 @@ function CandidacyApplication(props)
         e.preventDefault();
         
         const formData = new FormData();
-        formData.append("id", student.id);
         formData.append("process","DEPARTMENT_CANDIDACY");
     
-        fetch("https://iyte-election.azurewebsites.net/candidates/id", {
+        fetch("https://iyte-election.azurewebsites.net/candidates/"+student.id, {
           method: "POST",
           body: formData,
         })

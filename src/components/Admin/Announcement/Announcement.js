@@ -33,7 +33,7 @@ function Announcement(props) {
 
   const handleSave = (e) => {
     e.preventDefault();
-    fetch("https://iyte-election.azurewebsites.net/announcements"+announcementId, {
+    fetch("https://iyte-election.azurewebsites.net/announcements/"+announcementId, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

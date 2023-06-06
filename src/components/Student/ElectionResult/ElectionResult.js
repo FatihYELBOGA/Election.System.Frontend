@@ -10,45 +10,10 @@ function ElectionResult(props) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [student,setStudent] = useState("");
   const [studentList,setStudentList] = useState([]);
-  const [voteId,setVoteId] = useState(0);
   const [isActive,setIsActive] = useState(false);
   const [isFinished,setIsFinished] = useState(false);
 
 
-  const refreshPosts = () => {
-    fetch("https://iyte-election.azurewebsites.net/students/"+userId)
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          setIsLoaded(true);
-          setStudent(result);
-          if(student !== ""){
-            getCandidateList();
-          }
-          
-        },
-        (error) => {
-         
-          setIsLoaded(true);
-          setError(error);
-        }
-      );
-  };
-
-  const getCandidateList = (e) => {
-    const url = `https://iyte-election.azurewebsites.net/election/results/`+student.department.id;
-   
-    fetch(url, {
-      method: "GET",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setStudentList(data)  
-      })
-      .catch((err) => console.log(err));
-
-      
-  };
 
   const handleActiveProcess = (e) =>{
     const formData = new FormData();
@@ -112,15 +77,57 @@ function ElectionResult(props) {
     
 
   }
+  useEffect(() =>{
+    fetch("https://iyte-election.azurewebsites.net/students/"+userId)
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          setIsLoaded(true);
+          setStudent(result);   
+        },
+        (error) => {
+         
+          setIsLoaded(true);
+          setError(error);
+        }
+      );
+  },[userId])
   
   useEffect(() => {
-    refreshPosts();
-    handleActiveProcess();
     handlePastProcess();
+  }, [isFinished]);
 
-  }, [student]);
+  useEffect(()=>{
+    handleActiveProcess();
+  },[isActive])
+  
+  useEffect(()=>{
+    if(student !== ""){
+      const url = `https://iyte-election.azurewebsites.net/election/results/`+student.department.id;
+   
+    fetch(url, {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setStudentList(data)  
+      })
+      .catch((err) => console.log(err));
+    }
+  },[student])
 
-  if(!isActive && !isFinished){
+  if (error) {
+    return <div>Error!..</div>;
+  } else if (!isLoaded) {
+    return (
+      <Box sx={{ marginTop:"20%", display: 'flex', textAlign: 'center', justifyContent: 'center' }}>
+        <CircularProgress />
+      </Box>
+    );
+
+  }else{
+
+    if(!isActive && !isFinished){
 
       return(
           <div >
@@ -128,24 +135,13 @@ function ElectionResult(props) {
           </div>
       );
 
-  }else{
-
-      if (error) {
-        return <div>Error!..</div>;
-      } else if (!isLoaded) {
-        return (
-          <Box sx={{ marginTop:"30%", display: 'flex', textAlign: 'center', justifyContent: 'center' }}>
-            <CircularProgress />
-          </Box>
-        );
+      
       } else {
         return (
             <div className="" style={{display:"flex !important",justifyContent:"center !important"}}>
-                
-                
               <div fixed="true" className="announcement">
                 {studentList.map((candidate) => (
-                  <Candidate numberOfVotes={candidate.numberOfVotes} isFinished={isFinished} type="election-result" student={candidate.candidate} userId={userId}/>
+                  <Candidate key={candidate.candidate.id} numberOfVotes={candidate.numberOfVotes} isFinished={isFinished} type="election-result" student={candidate.candidate} userId={userId}/>
                 ))}
               </div>
             </div>

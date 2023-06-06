@@ -15,8 +15,8 @@ function Process(props){
     const [isEditing,setIsEditing] = useState(false);
     const [editStartDate,setStartDate]= useState(startDate.split("T")[0]);
     const [editEndDate,setEndDate] = useState(endDate.split("T")[0]);
-    const [editStartTime,setEditStartTime] = useState(startDate.split("T")[1]);
-    const [editEndTime,setEditEndTime] = useState(endDate.split("T")[1]);
+    const [editStartTime,setEditStartTime] = useState(startDate.split("T")[1].slice(0,-3));
+    const [editEndTime,setEditEndTime] = useState(endDate.split("T")[1].slice(0,-3));
     const [editProcess,setEditProcess] = useState(processName);
     const [processNames,setProcessNames] = useState([]);
 
@@ -34,6 +34,7 @@ function Process(props){
       };
     
     const handleSave = (e) => {
+        
         e.preventDefault();
         fetch("https://iyte-election.azurewebsites.net/processes/"+processId, {
           method: "PUT",
@@ -41,11 +42,10 @@ function Process(props){
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            id: processId,
             processType: editProcess,
-            startDate: editStartDate,
-            endDate: editEndDate,
-            administrationId: userId,
+            startDate: editStartDate+"-"+editStartTime.replace(":","-")+"-0",
+            endDate: editEndDate+"-"+editEndTime.replace(":","-")+"-0",
+            administratonId: userId,
           }),
         })
           .then((res) => res.json())

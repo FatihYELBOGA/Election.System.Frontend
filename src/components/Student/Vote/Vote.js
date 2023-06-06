@@ -20,92 +20,7 @@ function Vote(props) {
   const [isFuture,setIsFuture] = useState(false);
   const [futureProcess,setFutureProcess] = useState();
 
-  const handleIsVoted = () =>{
-    fetch("https://iyte-election.azurewebsites.net/election/"+userId)
-    .then((res) => {
-      if (res.status === 204) {
-        // Handle 204 No Content response
-        return Promise.resolve(null);
-      } else {
-        return res.json();
-      }
-    })
-    .then(
-      (result) => {
-        if(result === null){
-           setVoteId(0);
-        }else{
-          setVoteId(result.id);
-        }
-      
-        
-      },
-      (error) => {
-        console.log(error);
-       
-      }
-    );
-  }
-
-  const refreshPosts = () => {
-    fetch("https://iyte-election.azurewebsites.net/students/"+userId)
-      .then((res) => {
-        if (res.status === 204) {
-          // Handle 204 No Content response
-          return Promise.resolve(null);
-        } else {
-          return res.json();
-        }
-      })
-      .then(
-        (result) => {
-          setIsLoaded(true);
-          setStudent(result);
-          getCandidateList();
-        },
-        (error) => {
-          console.log(error);
-          setIsLoaded(true);
-          setError(error);
-        }
-      );
-  };
-
-  const getCandidateList = (e) => {
-    const formData = new FormData();
-    formData.append("process", "DEPARTMENT_CANDIDACY");
-    
-    const queryParams = new URLSearchParams(formData).toString();
-    const url = `https://iyte-election.azurewebsites.net/candidates?${queryParams}`;
-  
-    fetch(url, {
-      method: "GET",
-    })
-      .then((res) => {
-      if (res.status === 204) {
-        // Handle 204 No Content response
-        return Promise.resolve(null);
-      } else {
-        return res.json();
-      }
-    })
-      .then((data) => {
-       
-        setStudentList(data)
-        
-      })
-      .catch((err) => console.log(err));
-
-      const newArray = studentList.filter((candidate) =>
-          candidate.department.name === student.department.name
-        );
-        
-        setDepartmentCandidateList(newArray);
-  };
-
   const handleProcessesFuture = (e) =>{
-      
-      
     const formData = new FormData();
     formData.append("process", "DEPARTMENT_REPRESENTATIVE");
     
@@ -160,28 +75,112 @@ function Vote(props) {
       .then((data) => {
         if (data !== null) {
           // Handle successful response
+          
           setIsActive(true);
         } else {
           // Handle 204 No Content response
           setIsActive(false);
-          handleProcessesFuture();
         }
       })
       .catch((err) => console.log(err));
   }
+  useEffect(() =>{
+    fetch("https://iyte-election.azurewebsites.net/students/"+userId)
+      .then((res) => {
+        if (res.status === 204) {
+          // Handle 204 No Content response
+          return Promise.resolve(null);
+        } else {
+          return res.json();
+        }
+      })
+      .then(
+        (result) => {
+          setIsLoaded(true);
+          setStudent(result);
+          
+        },
+        (error) => {
+          console.log(error);
+          setIsLoaded(true);
+          setError(error);
+        }
+      );
+
+  },[userId])
+  useEffect(() => {
+    fetch("https://iyte-election.azurewebsites.net/election/"+userId)
+    .then((res) => {
+      if (res.status === 204) {
+        // Handle 204 No Content response
+        return Promise.resolve(null);
+      } else {
+        return res.json();
+      }
+    })
+    .then(
+      (result) => {
+        if(result === null){
+           setVoteId(0);
+        }else{
+          setVoteId(result.id);
+        }
+      
+        
+      },
+      (error) => {
+        console.log(error);
+       
+      }
+    );
+  }, [userId]);
+
+  useEffect(()=>{
+    handleActiveProcess()
+  },[isActive])
+
+  useEffect(() =>{
+    handleProcessesFuture();
+  },[isFuture])
 
   useEffect(() => {
-    refreshPosts();
-    handleIsVoted();
-    handleActiveProcess();
-  }, [voteId, departmentCandidateList, isActive,isFuture]);
-
+    const formData = new FormData();
+    formData.append("process", "DEPARTMENT_CANDIDACY");
+      
+    const queryParams = new URLSearchParams(formData).toString();
+    const url = `https://iyte-election.azurewebsites.net/candidates?${queryParams}`;
+  
+    fetch(url, {
+      method: "GET",
+    })
+      .then((res) => {
+        if (res.status === 204) {
+          // Handle 204 No Content response
+          return Promise.resolve(null);
+        } else {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        if (data !== null) {
+          setStudentList(data);
+  
+          const newArray = studentList.filter((candidate) =>
+            candidate.department.name === student.department.name
+          );
+          
+          setDepartmentCandidateList(newArray);
+        }
+      })
+      .catch((err) => console.log(err));
+  }, [student,studentList]);
+  
 
   if (error) {
     return <div>Error!..</div>;
   } else if (!isLoaded) {
     return (
-      <Box sx={{ marginTop:"30%",display: 'flex', textAlign: 'center', justifyContent: 'center' }}>
+      <Box sx={{ marginTop:"20%",display: 'flex', textAlign: 'center', justifyContent: 'center' }}>
         <CircularProgress />
       </Box>
     );

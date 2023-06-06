@@ -22,57 +22,6 @@ function Candidacy(props){
     const [documentCount,setDocumentCount] = useState(0);
     const [documentTypes,setDocumentTypes] = useState([]);
     const [isLoaded, setIsLoaded] = useState(false);
-    
-    const handleProcessStart = (e) =>{
-      
-        const formData = new FormData();
-        formData.append("process", "DEPARTMENT_CANDIDACY");
-        
-        const queryParams = new URLSearchParams(formData).toString();
-        const url = `https://iyte-election.azurewebsites.net/processes/starting-process?${queryParams}`;
-      
-        fetch(url, {
-          method: "GET",
-        })
-          .then((res) => {
-            if (res.status === 204) {
-              // Handle 204 No Content response
-              return Promise.resolve(null);
-            } else {
-              return res.json();
-            }
-          })
-          .then((data) => {
-            if (data !== null) {
-              // Handle successful response
-              setIsActive(true);
-            } else {
-              // Handle 204 No Content response
-              setIsActive(false);
-              handleProcessesFuture();
-            }
-          })
-          .catch((err) => console.log(err));
-    
-      
-
-    }
-
-    const handleDocumentTypes = (e) =>{
-      
-        fetch("https://iyte-election.azurewebsites.net/document-types")
-        .then((res) =>
-            res.json() )
-        .then(
-            (result) => {
-                setDocumentTypes(result);
-            },
-            (error) => {
-                console.log(error);
-            }
-        )
-    
-    }
 
     const handleProcessesFuture = (e) =>{
       
@@ -110,7 +59,34 @@ function Candidacy(props){
         
     }
 
-    const handleControlApply = (e) =>{
+    const  handleApply = ()=>{
+        if(documentCount===4){
+          alert("Success");
+          setIsSent(true);
+          
+        }else{
+          alert("Please upload all of the file.")
+        }
+        
+      
+    }
+
+    useEffect(()=>{
+      fetch("https://iyte-election.azurewebsites.net/document-types")
+        .then((res) =>
+            res.json() )
+        .then(
+            (result) => {
+                setDocumentTypes(result);
+            },
+            (error) => {
+                console.log(error);
+            }
+        )
+
+    },[])
+
+    useEffect(()=>{
       fetch("https://iyte-election.azurewebsites.net/documents/department-candidacy/"+userId)
         .then((res) =>
             res.json() )
@@ -127,31 +103,44 @@ function Candidacy(props){
 
             setIsApply(true);
         }
+    },[userId,documents])
 
-    }
 
-
-    const  handleApply = ()=>{
-        if(documentCount===4){
-          alert("Success");
-          setIsSent(true);
-          
-        }else{
-          alert("Please Fill in the blank")
-        }
+    useEffect(()=>{
+      const formData = new FormData();
+        formData.append("process", "DEPARTMENT_CANDIDACY");
         
+        const queryParams = new URLSearchParams(formData).toString();
+        const url = `https://iyte-election.azurewebsites.net/processes/starting-process?${queryParams}`;
       
-    }
-    useEffect((e)=>{
-        handleDocumentTypes();
-        handleControlApply();
-        handleProcessStart();
+        fetch(url, {
+          method: "GET",
+        })
+          .then((res) => {
+            if (res.status === 204) {
+              // Handle 204 No Content response
+              return Promise.resolve(null);
+            } else {
+              return res.json();
+            }
+          })
+          .then((data) => {
+            if (data !== null) {
+              // Handle successful response
+              setIsActive(true);
+            } else {
+              // Handle 204 No Content response
+              setIsActive(false);
+              handleProcessesFuture();
+            }
+          })
+          .catch((err) => console.log(err));
     },[documents])
 
 
     if(!isLoaded){
       return (
-          <Box sx={{ marginTop:"30%",display: 'flex' ,textAlign: 'center',justifyContent:'center'}}>
+          <Box sx={{ marginTop:"20%",display: 'flex' ,textAlign: 'center',justifyContent:'center'}}>
               <CircularProgress />
           </Box>
       );

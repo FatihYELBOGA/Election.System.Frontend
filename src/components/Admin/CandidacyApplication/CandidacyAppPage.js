@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from "react";
 import CircularProgress from '@mui/material/CircularProgress';
-import SearchIcon from '@mui/icons-material/Search';
 import Box from '@mui/material/Box';
-import { Button } from "@mui/material";
+
 
 import './CandidacyApplication.css';
 import CandidacyApplication from "./CandidacyApplication";
 
 function CandidacyAppPage(props) {
-  const { userId } = props;
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
   const [studentList, setStudentList] = useState([]);
 
   const refreshPosts = () => {

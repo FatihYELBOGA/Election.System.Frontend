@@ -7,7 +7,7 @@ import DoneIcon from '@mui/icons-material/Done';
 import CloseIcon from '@mui/icons-material/Close';
 
 function DocumentView(props) {
-  const { studentId,document } = props;
+  const { document } = props;
   const [fileDisplay, setFileDisplay] = useState(null);
   const [editControlStatus,setEditControlStatus] = useState(document.controlStatus);
 
@@ -80,7 +80,7 @@ function DocumentView(props) {
 
   return (
     <div className='' style={{ textAlign: "center", display: "flex", justifyContent: "center" }}>
-      <Card className='' sx={{ marginBottom: 2, borderRadius: 0, width: "90%",maxWidth:"600px",borderRadius:5 }}>
+      <Card className='' sx={{ marginBottom: 2, width: "90%",maxWidth:"600px",borderRadius:5 }}>
         <CardActionArea disableTouchRipple disableRipple sx={{ cursor: "default", justifyContent: "center" }}>
           <CardContent>
         

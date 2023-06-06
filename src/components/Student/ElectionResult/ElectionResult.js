@@ -134,7 +134,7 @@ function ElectionResult(props) {
         return <div>Error!..</div>;
       } else if (!isLoaded) {
         return (
-          <Box sx={{ marginTop:"35%", display: 'flex', textAlign: 'center', justifyContent: 'center' }}>
+          <Box sx={{ marginTop:"30%", display: 'flex', textAlign: 'center', justifyContent: 'center' }}>
             <CircularProgress />
           </Box>
         );

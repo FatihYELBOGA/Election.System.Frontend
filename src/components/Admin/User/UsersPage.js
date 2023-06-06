@@ -62,7 +62,7 @@ function UsersPage(props) {
     return <div>Error!..</div>;
   } else if (!isLoaded) {
     return (
-      <Box sx={{ display: 'flex', textAlign: 'center', justifyContent: 'center' }}>
+      <Box sx={{ marginTop:"30%",display: 'flex', textAlign: 'center', justifyContent: 'center' }}>
         <CircularProgress />
       </Box>
     );

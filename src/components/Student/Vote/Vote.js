@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react";
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import Candidate from "./Candidate"
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import { CardActionArea } from '@mui/material';
 
 
 function Vote(props) {
@@ -13,15 +17,28 @@ function Vote(props) {
   const [voteId,setVoteId] = useState(0);
   const [departmentCandidateList, setDepartmentCandidateList] = useState([]);
   const [isActive,setIsActive] = useState(false);
+  const [isFuture,setIsFuture] = useState(false);
   const [futureProcess,setFutureProcess] = useState();
 
   const handleIsVoted = () =>{
     fetch("https://iyte-election.azurewebsites.net/election/"+userId)
-    .then((res) => res.json())
+    .then((res) => {
+      if (res.status === 204) {
+        // Handle 204 No Content response
+        return Promise.resolve(null);
+      } else {
+        return res.json();
+      }
+    })
     .then(
       (result) => {
+        if(result === null){
+           setVoteId(0);
+        }else{
+          setVoteId(result.id);
+        }
       
-        setVoteId(result.id);
+        
       },
       (error) => {
         console.log(error);
@@ -32,7 +49,14 @@ function Vote(props) {
 
   const refreshPosts = () => {
     fetch("https://iyte-election.azurewebsites.net/students/"+userId)
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 204) {
+          // Handle 204 No Content response
+          return Promise.resolve(null);
+        } else {
+          return res.json();
+        }
+      })
       .then(
         (result) => {
           setIsLoaded(true);
@@ -57,7 +81,14 @@ function Vote(props) {
     fetch(url, {
       method: "GET",
     })
-      .then((res) => res.json())
+      .then((res) => {
+      if (res.status === 204) {
+        // Handle 204 No Content response
+        return Promise.resolve(null);
+      } else {
+        return res.json();
+      }
+    })
       .then((data) => {
        
         setStudentList(data)
@@ -72,20 +103,78 @@ function Vote(props) {
         setDepartmentCandidateList(newArray);
   };
 
+  const handleProcessesFuture = (e) =>{
+      
+      
+    const formData = new FormData();
+    formData.append("process", "DEPARTMENT_REPRESENTATIVE");
+    
+    const queryParams = new URLSearchParams(formData).toString();
+    const url = `https://iyte-election.azurewebsites.net/processes/will-start-process?${queryParams}`;
+  
+    fetch(url, {
+      method: "GET",
+    })
+      .then((res) => {
+        if (res.status === 204) {
+          // Handle 204 No Content response
+          return Promise.resolve(null);
+        } else {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        if (data !== null) {
+          // Handle successful response
+          setIsFuture(true);
+          setFutureProcess(data);
+        } else {
+          // Handle 204 No Content response
+          setIsFuture(false);
+
+        }
+      })
+      .catch((err) => console.log(err));
+
+    
+}
   const handleActiveProcess = (e) =>{
+        
+    const formData = new FormData();
+    formData.append("process", "DEPARTMENT_REPRESENTATIVE");
+    
+    const queryParams = new URLSearchParams(formData).toString();
+    const url = `https://iyte-election.azurewebsites.net/processes/starting-process?${queryParams}`;
 
+    fetch(url, {
+      method: "GET",
+    })
+      .then((res) => {
+        if (res.status === 204) {
+          // Handle 204 No Content response
+          return Promise.resolve(null);
+        } else {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        if (data !== null) {
+          // Handle successful response
+          setIsActive(true);
+        } else {
+          // Handle 204 No Content response
+          setIsActive(false);
+          handleProcessesFuture();
+        }
+      })
+      .catch((err) => console.log(err));
   }
-
-  const handleFutureProcess = (e) =>{
-
-  }
-  
-  
 
   useEffect(() => {
     refreshPosts();
     handleIsVoted();
-  }, [voteId,departmentCandidateList]);
+    handleActiveProcess();
+  }, [voteId, departmentCandidateList, isActive,isFuture]);
 
 
   if (error) {
@@ -96,7 +185,7 @@ function Vote(props) {
         <CircularProgress />
       </Box>
     );
-  } else {
+  } else if(isActive && isLoaded) {
     return (
         <div className="" style={{display:"flex !important",justifyContent:"center !important"}}>
             
@@ -111,6 +200,48 @@ function Vote(props) {
         </div>
         
     );
+  }else if(!isActive && isFuture){
+    return(
+    <div className='container'>
+          <Card className='candidacy-card' sx={{ marginTop: 15,borderRadius:5}}>
+          <CardActionArea disableTouchRipple disableRipple sx={{cursor:"default"}} >
+            <CardContent>
+             <Typography>There is no active process at the moment, you can see the next process </Typography>
+             <Typography gutterBottom variant="h5" component="div">
+                {futureProcess.process.replace("_"," ")}
+              </Typography>
+              <div style={{display:"flex",justifyContent:"center"}}>
+              <div style={{marginRight:60}}>
+                
+                <Typography variant='h6'>
+                    {futureProcess.startDate}
+                </Typography>
+              </div>
+              <div style={{marginLeft:60}}>
+              <Typography variant='h6'>
+                    {futureProcess.endDate}
+                </Typography>
+              </div>
+              </div>
+            </CardContent>
+          </CardActionArea>
+        </Card>
+
+      </div>
+    );
+
+  }
+  else{
+      return(
+        <Card className='candidacy-card' sx={{ marginTop: 15,borderRadius:5}}>
+          <CardActionArea disableTouchRipple disableRipple sx={{cursor:"default"}} >
+            <CardContent>
+             <Typography>There is no active process at the moment, you can follow the announcements. </Typography>
+             
+            </CardContent>
+          </CardActionArea>
+        </Card>
+      )
   }
 }
 

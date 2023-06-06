@@ -5,6 +5,8 @@ import Typography from '@mui/material/Typography';
 import { Button, CardActionArea } from '@mui/material';
 import DocumentView from './DocumentView';
 import CloseIcon from '@mui/icons-material/Close';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 
 function CandidacyApplication(props)
@@ -27,7 +29,14 @@ function CandidacyApplication(props)
       fetch(url, {
         method: "GET",
       })
-        .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 204) {
+          // Handle 204 No Content response
+          return Promise.resolve(null);
+        } else {
+          return res.json();
+        }
+      })
         .then((data) => {
           data.forEach((element)=>{
             if(element.id === student.id){
@@ -43,35 +52,41 @@ function CandidacyApplication(props)
     }
 
     const handleDetail = (e) =>{
-        
-          fetch("https://iyte-election.azurewebsites.net/documents/department-candidacy/"+student.id)
-            .then((res) =>
-                res.json() )
-            .then(
-                (result) => {
-                    setDocuments(result);
-                    console.log(result);
-                    setIsLoaded(true);
-                    var count = 0;
-                    documents.forEach((element) => {
-                      if(element.controlStatus === "APPROVED" ){
-                          count++;
-                      }
-                      
-                    });
-                    
-                    setApproveCount(count);    
-                },
-                (error) => {
-                    console.log(error);
+      e.preventDefault();
+      fetch("https://iyte-election.azurewebsites.net/documents/department-candidacy/"+student.id)
+      .then((res) => {
+        if (res.status === 204) {
+          // Handle 204 No Content response
+          return Promise.resolve(null);
+        } else {
+          return res.json();
+        }
+      })
+        .then(
+          (result) => {
+              setDocuments(result);
+              console.log(result);
+              setIsLoaded(true);
+              var count = 0;
+              documents.forEach((element) => {
+                if(element.controlStatus === "APPROVED" ){
+                    count++;
                 }
-            ) 
+                
+              });
+              
+              setApproveCount(count);    
+          },
+            (error) => {
+                console.log(error);
+            }
+        ) 
+    
+    setIsDetailed(true);
         
-        setIsDetailed(true);
-        console.log(documents)    
-    };
+};
 
-    const handleAddCandidate = (e) =>{
+  const handleAddCandidate = (e) =>{
         e.preventDefault();
         
         const formData = new FormData();
@@ -96,6 +111,9 @@ function CandidacyApplication(props)
     }
 
     const handleCancel = (e) => {
+      e.preventDefault();
+      setIsCandidate(false);
+      
       fetch("https://iyte-election.azurewebsites.net/candidates/"+student.id,{
           method: "DELETE",
           headers: {
@@ -106,23 +124,23 @@ function CandidacyApplication(props)
           }),
         })
         .then((res) => res.json())
-        .then((result) =>{console.log(result)})
         .catch((err) => {
           // Handle any errors
           console.log(err);
         });
-        setIsCandidate(false);
+        
     };
 
 
     useEffect((e) =>{
       checkIsCandidate();
     },[isCandidate])
+
     if(isDetailed){
         return (
             <Card  id={student.id} sx={{ marginTop: 10,marginBottom:10,width:"51%",marginRight:"25%",marginLeft:"25%",borderRadius:5}}>
               <CardActionArea disableTouchRipple disableRipple sx={{cursor:"default"}} >
-                <CardContent>
+                {(isLoaded) ? ( <CardContent>
                   <Typography sx={{display:"flex",justifyContent:"center",marginTop:2,marginBottom:2}} gutterBottom variant="h5" component="div">
                     {student.firstName+" "+student.lastName}
                   </Typography>
@@ -161,14 +179,22 @@ function CandidacyApplication(props)
                   
                  
                 </CardContent>
+
+                ) : (
+                  <Box sx={{ display: 'flex' ,textAlign: 'center',justifyContent:'center'}}>
+                <CircularProgress />
+                 </Box>
+                )}
+                
               </CardActionArea>
             </Card>
           );
 
     }else{
+      
     return (
     
-      <Card  id={student.id} sx={{ display:"flex",marginTop: 10,marginBottom: 0,marginRight:5,marginLeft:5,width:"31%",borderRadius:3,justifyContent:"center",textAlign:"center"}}>
+      <Card  id={student.id} sx={{ border: isCandidate ? "1px solid" : "", borderColor:"green",display:"flex",marginTop: 10,marginBottom: 0,marginRight:5,marginLeft:5,width:"31%",borderRadius:3,justifyContent:"center",textAlign:"center"}}>
         <CardActionArea disableTouchRipple disableRipple sx={{cursor:"default"}} >
           <CardContent>
             <Typography sx={{justifyContent:"center",marginBottom:2}} gutterBottom variant="h5" component="div">

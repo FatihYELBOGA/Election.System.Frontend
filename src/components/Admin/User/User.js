@@ -19,8 +19,14 @@ function User(props)
     const [roles ,setRoles] = useState([]);
     const refreshRoles = () => {
         fetch("https://iyte-election.azurewebsites.net/roles")
-        .then((res) =>
-            res.json() )
+        .then((res) => {
+          if (res.status === 204) {
+            // Handle 204 No Content response
+            return Promise.resolve(null);
+          } else {
+            return res.json();
+          }
+        })
         .then(
             (result) => {
                 setRoles(result);

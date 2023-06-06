@@ -45,7 +45,7 @@ function Candidate(props){
                     <div style={{marginTop:10,justifyContent:"center",display:"flex"}}>
         
                       
-                      <Button onClick={handleVote} variant='contained' sx={{backgroundColor:"#B61815"}} >VOTE</Button>
+                      <Button onClick={handleVote} variant='contained' sx={{backgroundColor:"#B61815",width:"20%"}} >VOTE</Button>
                     
                     </div>
                   

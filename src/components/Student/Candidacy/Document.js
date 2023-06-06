@@ -20,11 +20,11 @@ function Document(props){
           setDocumentCount(documentCount + 1);
         }
       }
-      console.log(documentCount);
+      
     };
 
     const  handleApply = ()=>{
-      console.log("osman altunay")
+      
       const formData = new FormData();
       formData.append("StudentId", userId);
       formData.append("Process", "DEPARTMENT_REPRESENTATIVE");
@@ -38,7 +38,7 @@ function Document(props){
         .then((res) => res.json()) 
         .then((data) => {
           console.log(data);
-          alert("Document sent succesfully!");
+          
         })
         .catch((err) => console.log(err));
     }

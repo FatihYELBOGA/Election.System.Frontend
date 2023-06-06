@@ -10,6 +10,8 @@ import DoneIcon from '@mui/icons-material/Done';
 function DocumentView(props) {
   const { userId, document } = props;
   const [fileDisplay, setFileDisplay] = useState(null);
+  const [file,setFile] = useState(null);
+  const [isEdit,setIsEdit] = useState(false);
 
   const convertBase64ToFile = (base64String, fileName) => {
     const contentType = 'application/pdf'; // Update the content type as per your file type
@@ -34,44 +36,111 @@ function DocumentView(props) {
     setFileDisplay(file);
   };
 
+  const handleEdit = (e) =>{
+    setIsEdit(true);
+  }
+  const  handleApply = ()=>{
+    if(file === null){
+        alert("Please fill on the file")
+    }else{
+    const formData = new FormData();
+    formData.append("file", file);
+
+    fetch("https://iyte-election.azurewebsites.net/documents/"+document.id, {
+      method: "PUT",
+      body: formData
+    })
+      .then((res) => res.json()) 
+      .then((data) => {
+        
+        alert("Document sent succesfully!");
+        setIsEdit(false);
+      })
+      .catch((err) => console.log(err));
+    }
+  }
+
+  const handleFile = (e) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      setFile(selectedFile);
+    }
+    
+  };
+
+  
+
   useEffect(() => {
     if (document.file) {
       convertBase64ToFile(document.file.content, document.file.name);
     }
-  }, [document]);
+  }, [document,isEdit]);
 
-  return (
-    <div className='' style={{ textAlign: "center", display: "flex", justifyContent: "center" }}>
-      <Card className='' sx={{ marginBottom: 2, borderRadius: 0, width: "90%",maxWidth:"600px" }}>
-        <CardActionArea disableTouchRipple disableRipple sx={{ cursor: "default", justifyContent: "center" }}>
-          <CardContent>
-        
+  if(!isEdit){
+    return (
+      <div className='' style={{ textAlign: "center", display: "flex", justifyContent: "center" }}>
+        <Card className='' sx={{ marginBottom: 2, borderRadius: 0, width: "90%",maxWidth:"600px" }}>
+          <CardActionArea disableTouchRipple disableRipple sx={{ cursor: "default", justifyContent: "center" }}>
+            <CardContent>
+          
+              <div style={{ marginBottom: 5 ,display:"flex",justifyContent:"center"}}>
+               <span style={{marginLeft:"32%",marginTop:8,textAlign:"center"}}> {document.document.replace("_", " ")}</span>
+              {(document.controlStatus === "APPROVED") ? 
+              
+              (<Button disabled={true} sx={{padding:0,marginLeft:"18%"}}><DoneIcon sx={{color:"green",fontSize:"25px"}} /></Button>):
+              
+              (<Button onClick={handleEdit}  sx={{padding:0,marginLeft:"18%"}}><EditIcon sx={{color:"black",fontSize:"25px"}} /></Button>)} 
+              
+             
+              </div>
+              <div style={{marginBottom:15}}>
+                {fileDisplay && (
+                  <a href={URL.createObjectURL(fileDisplay)} target="_blank" rel="noopener noreferrer">
+                    {fileDisplay.name}
+                  </a>
+                )}
+              </div>
+              <div style={{ marginLeft:"35%",width:"30%", textAlign: "center",border:"1px solid",borderRadius:5,padding:5 }}>
+                {document.controlStatus}
+              </div>
+              
+            </CardContent>
+          </CardActionArea>
+        </Card>
+      </div>
+    );
+
+  }else{
+    return (
+
+      <div className='' style={{textAlign:"center",display:"flex",justifyContent:"center"}}>
+          <Card className=''  sx={{ marginBottom: 2, borderRadius: 0, width: "90%",maxWidth:"600px" }}>
+          <CardActionArea disableTouchRipple disableRipple sx={{cursor:"default",justifyContent:"center"}} >
+            <CardContent>
             <div style={{ marginBottom: 5 ,display:"flex",justifyContent:"center"}}>
-             <span style={{marginLeft:"32%",marginTop:8,textAlign:"center"}}> {document.document.replace("_", " ")}</span>
-            {(document.controlStatus === "APPROVED") ? 
-            
-            (<Button disabled={true} sx={{padding:0,marginLeft:"18%"}}><DoneIcon sx={{color:"green",fontSize:"25px"}} /></Button>):
-            
-            (<Button  sx={{padding:0,marginLeft:"18%"}}><EditIcon sx={{color:"black",fontSize:"25px"}} /></Button>)} 
-            
-           
+            <span style={{marginBottom:8,marginTop:8,textAlign:"center"}}> {document.document.replace("_", " ")}</span>
             </div>
-            <div style={{marginBottom:15}}>
-              {fileDisplay && (
-                <a href={URL.createObjectURL(fileDisplay)} target="_blank" rel="noopener noreferrer">
-                  {fileDisplay.name}
-                </a>
-              )}
+            <form onSubmit={handleApply}>
+            <div style={{display:"flex",justifyContent:"center",width:"100%",marginLeft:"10%"}}>
+              
+              <input  style={{width:"80%"}} required={true} onChange={handleFile} disabled={false} type="file" name="archive" accept=".pdf" />
             </div>
-            <div style={{ marginLeft:"35%",width:"30%", textAlign: "center",border:"1px solid",borderRadius:5,padding:5 }}>
-              {document.controlStatus}
+            <div>
+              <Button onClick={(e) => setIsEdit(false)}>Cancel</Button>
+              <Button onClick={handleApply}>Send</Button>
             </div>
-            
-          </CardContent>
-        </CardActionArea>
-      </Card>
-    </div>
-  );
+            </form>
+              
+              
+            </CardContent>
+          </CardActionArea>
+        </Card>
+
+      </div>
+        
+      );
+  }
+  
 }
 
 export default DocumentView;

@@ -13,35 +13,48 @@ import DocumentView from './DocumentView';
 
 function Candidacy(props){
     const {userId} = props;
-    const [isStart,setIsStart] = useState(false);
+    const [isActive,setIsActive] = useState(false);
     const [isApply,setIsApply] = useState(false);  
     const [isFuture,setIsFuture] = useState(false);
     const [isSent,setIsSent] = useState(false);
     const [documents,setDocuments] = useState([]);
-    const [futureProcess,setFutureProcess] = useState("");
-    const [startedProcess,setStartedProcess] = useState("");
+    const [futureProcess,setFutureProcess] = useState();
     const [documentCount,setDocumentCount] = useState(0);
     const [documentTypes,setDocumentTypes] = useState([]);
     const [isLoaded, setIsLoaded] = useState(false);
     
     const handleProcessStart = (e) =>{
-      fetch("https://iyte-election.azurewebsites.net/processes/started-department-candidacy")
-        .then((res) =>
-            res.json() )
-        .then(
-            (result) => {
-                setStartedProcess(result);
-            },
-            (error) => {
-                console.log(error);
+      
+        const formData = new FormData();
+        formData.append("process", "DEPARTMENT_CANDIDACY");
+        
+        const queryParams = new URLSearchParams(formData).toString();
+        const url = `https://iyte-election.azurewebsites.net/processes/starting-process?${queryParams}`;
+      
+        fetch(url, {
+          method: "GET",
+        })
+          .then((res) => {
+            if (res.status === 204) {
+              // Handle 204 No Content response
+              return Promise.resolve(null);
+            } else {
+              return res.json();
             }
-        )
-      if(startedProcess === ""){
-        setIsStart(true);
-      }else{
-        setIsStart(false);
-        handleProcessesFuture();
-      }
+          })
+          .then((data) => {
+            if (data !== null) {
+              // Handle successful response
+              setIsActive(true);
+            } else {
+              // Handle 204 No Content response
+              setIsActive(false);
+              handleProcessesFuture();
+            }
+          })
+          .catch((err) => console.log(err));
+    
+      
 
     }
 
@@ -62,18 +75,39 @@ function Candidacy(props){
     }
 
     const handleProcessesFuture = (e) =>{
-      fetch("https://iyte-election.azurewebsites.net/processes/will-start-department-candidacy")
-        .then((res) =>
-            res.json() )
-        .then(
-            (result) => {
-                setFutureProcess(result);
-            },
-            (error) => {
-                console.log(error);
+      
+      
+        const formData = new FormData();
+        formData.append("process", "DEPARTMENT_CANDIDACY");
+        
+        const queryParams = new URLSearchParams(formData).toString();
+        const url = `https://iyte-election.azurewebsites.net/processes/will-start-process?${queryParams}`;
+      
+        fetch(url, {
+          method: "GET",
+        })
+          .then((res) => {
+            if (res.status === 204) {
+              // Handle 204 No Content response
+              return Promise.resolve(null);
+            } else {
+              return res.json();
             }
-        )
+          })
+          .then((data) => {
+            if (data !== null) {
+              // Handle successful response
+              setIsFuture(true);
+              setFutureProcess(data);
+            } else {
+              // Handle 204 No Content response
+              setIsFuture(false);
 
+            }
+          })
+          .catch((err) => console.log(err));
+    
+        
     }
 
     const handleControlApply = (e) =>{
@@ -92,15 +126,10 @@ function Candidacy(props){
         if(documents.length !== 0){
 
             setIsApply(true);
-            console.log(documents);
-            console.log("osmaoapofsmpsa")
         }
 
     }
 
-    const handleCancel= (e) =>{
-
-    }
 
     const  handleApply = ()=>{
         if(documentCount===4){
@@ -116,7 +145,10 @@ function Candidacy(props){
     useEffect((e)=>{
         handleDocumentTypes();
         handleControlApply();
+        handleProcessStart();
     },[documents])
+
+
     if(!isLoaded){
       return (
           <Box sx={{ display: 'flex' ,textAlign: 'center',justifyContent:'center'}}>
@@ -124,7 +156,7 @@ function Candidacy(props){
           </Box>
       );
   }
-  else if(isApply && isLoaded){
+  else if(isApply && isLoaded && isActive){
     return(<div className='container'>
     <Card  sx={{ marginTop: 15,borderRadius:5,width:"50%",marginLeft:"25%"}}>
     <CardActionArea disableTouchRipple disableRipple sx={{cursor:"default"}} >
@@ -138,21 +170,21 @@ function Candidacy(props){
         </Typography>
        
         {documents.map((document)=>(
-                      <div style={{display:"block",justifyContent:"center"}}>
-                        <DocumentView userId={userId} document={document}></DocumentView>
-                      </div>
-                    )
+            <div style={{display:"block",justifyContent:"center"}}>
+                <DocumentView userId={userId} document={document}></DocumentView>
+            </div>
+            )
 
-                    )}
+        )}
         
       </CardContent>
     </CardActionArea>
   </Card>
 
 </div>);
-  }
- //   if(isStart){
-    else {
+  }else{
+   if(isActive){
+    
           return (
 
           <div className='container'>
@@ -170,7 +202,7 @@ function Candidacy(props){
                   <form>
                     {documentTypes.map((document)=>(
                       <div>
-                      <Typography variant="body2" color="text.secondary">
+                      <Typography sx={{textAlign:"center"}} variant="body2" color="text.secondary">
                         {document.replace("_"," ")}
                       </Typography>
                         <Document isSent={isSent} userId={userId} documentCount={documentCount} setDocumentCount={setDocumentCount} documentType={document}></Document>
@@ -189,17 +221,53 @@ function Candidacy(props){
           </div>
             
           );
+      }else if(!isActive && isFuture){
+        return(
+        <div className='container'>
+              <Card className='candidacy-card' sx={{ marginTop: 15,borderRadius:5}}>
+              <CardActionArea disableTouchRipple disableRipple sx={{cursor:"default"}} >
+                <CardContent>
+                 <Typography>There is no active process at the moment, you can see the next process </Typography>
+                 <Typography gutterBottom variant="h5" component="div">
+                    {futureProcess.process.replace("_"," ")}
+                  </Typography>
+                  <div style={{display:"flex",justifyContent:"center"}}>
+                  <div style={{marginRight:60}}>
+                    
+                    <Typography variant='h6'>
+                        {futureProcess.startDate}
+                    </Typography>
+                  </div>
+                  <div style={{marginLeft:60}}>
+                  <Typography variant='h6'>
+                        {futureProcess.endDate}
+                    </Typography>
+                  </div>
+                  </div>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+
+          </div>
+        );
+
       }
+      else{
+          return(
+            <Card className='candidacy-card' sx={{ marginTop: 15,borderRadius:5}}>
+              <CardActionArea disableTouchRipple disableRipple sx={{cursor:"default"}} >
+                <CardContent>
+                 <Typography>There is no active process at the moment, you can follow the announcements. </Typography>
+                 
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          )
+      }
+    }
 
       
-    /*}else{
-      return(
-        <div style={{justifyContent:"center",display:"flex"}}>
-        <p>There is not any process</p>
-      </div>
-      );
-      
-    }*/
+    
 }
 
 export default Candidacy;

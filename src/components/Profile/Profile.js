@@ -20,7 +20,14 @@ function Profile(props) {
   const refreshUserId = () => {
 
     return fetch("https://iyte-election.azurewebsites.net/"+link+"/" + userId)
-      .then((res) => res.json())
+    .then((res) => {
+      if (res.status === 204) {
+        // Handle 204 No Content response
+        return Promise.resolve(null);
+      } else {
+        return res.json();
+      }
+    })
       .then(
         (user) => {
           setIsLoaded(true);

@@ -2,6 +2,11 @@ import React, { useState, useEffect } from "react";
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import Candidate from "../Vote/Candidate";
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import { CardActionArea } from '@mui/material';
+
 
 
 function ElectionResult(props) {
@@ -130,9 +135,14 @@ function ElectionResult(props) {
     if(!isActive && !isFinished){
 
       return(
-          <div >
-            <p>There are no election results yet, please follow the announcements.</p>
-          </div>
+        <Card className='candidacy-card' sx={{ marginTop: 15,borderRadius:5}}>
+        <CardActionArea disableTouchRipple disableRipple sx={{cursor:"default"}} >
+          <CardContent>
+           <Typography sx={{textAlign:"center"}}>There is no active process at the moment, you can follow the announcements. </Typography>
+           
+          </CardContent>
+        </CardActionArea>
+      </Card>
       );
 
       

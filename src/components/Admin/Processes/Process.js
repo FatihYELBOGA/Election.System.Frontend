@@ -34,7 +34,6 @@ function Process(props){
       };
     
     const handleSave = (e) => {
-        
         e.preventDefault();
         fetch("https://iyte-election.azurewebsites.net/processes/"+processId, {
           method: "PUT",

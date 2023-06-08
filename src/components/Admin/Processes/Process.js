@@ -35,6 +35,17 @@ function Process(props){
     
     const handleSave = (e) => {
         e.preventDefault();
+        let startControlDate = new Date(editStartDate+"T"+editStartTime+":0").getTime();
+        let endControlDate = new Date(editEndDate+"T"+editEndTime+":0").getTime();
+        if(startControlDate > endControlDate){
+          alert("Start date cannot be greater than end date!")
+        }else if(editProcess === ""){
+          alert("Please choose a Process type!")
+        }else if(startDate === "" || endDate === ""){
+          alert("Please enter the dates!");
+        }
+        else{
+
         fetch("https://iyte-election.azurewebsites.net/processes/"+processId, {
           method: "PUT",
           headers: {
@@ -50,7 +61,7 @@ function Process(props){
           .then((res) => res.json())
           .catch((err) => console.log(err));
           setIsEditing(false);
-    
+      }
     
       };
     const handleCancel = (e) =>{

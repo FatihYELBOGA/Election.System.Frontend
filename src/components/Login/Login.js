@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 function Login (props)  
 {
   const navigate = useNavigate();
-  const{setUserId, setRole,role} = props;
+  const{setUserId, setRole} = props;
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState(""); 
@@ -37,7 +37,7 @@ function Login (props)
       if(res.userId != null){
         setUserId(res.userId);
         setRole(res.role);
-        if(res.role ==="STUDENT"){
+        if(res.role ==="STUDENT"|| res.role === "DEPARTMENT_REPRESENTATIVE"){
           navigate("/home");
         }else if(res.role === "STUDENT_AFFAIR"){
           navigate("/announcements");

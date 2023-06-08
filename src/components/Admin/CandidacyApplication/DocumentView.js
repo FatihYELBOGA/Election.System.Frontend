@@ -5,9 +5,10 @@ import { CardActionArea } from '@mui/material';
 import Button from '@mui/material/Button';
 import DoneIcon from '@mui/icons-material/Done';
 import CloseIcon from '@mui/icons-material/Close';
+import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 
 function DocumentView(props) {
-  const { document } = props;
+  const { document,approveCount,setApproveCount } = props;
   const [fileDisplay, setFileDisplay] = useState(null);
   const [editControlStatus,setEditControlStatus] = useState(document.controlStatus);
 
@@ -54,6 +55,8 @@ function DocumentView(props) {
       .then((response)=>{
         console.log(response)
         setEditControlStatus(response.controlStatus);
+        setApproveCount(approveCount+1);
+        
       })
       .catch((err) => console.log(err));
           
@@ -78,6 +81,27 @@ function DocumentView(props) {
       
   }
 
+  const handleUnacceptable = (e) => {
+    e.preventDefault();
+    
+    const formData = new FormData();
+    formData.append("controlStatus", "UNACCEPTABLE");
+
+    fetch("https://iyte-election.azurewebsites.net/document/update-control-status/"+document.id, {
+      method: "PUT",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((response)=>{
+        console.log(response)
+        setEditControlStatus(response.controlStatus);
+      })
+      .catch((err) => console.log(err));
+      
+      
+  }
+  
+
   return (
     <div className='' style={{ textAlign: "center", display: "flex", justifyContent: "center" }}>
       <Card className='' sx={{ marginBottom: 2, width: "90%",maxWidth:"600px",borderRadius:5 }}>
@@ -94,14 +118,20 @@ function DocumentView(props) {
             
             ((editControlStatus === "DENIED") ? 
                 (<Button disabled={true}  sx={{padding:0,marginLeft:"18%"}}>
-                    <CloseIcon sx={{color:"red",fontSize:"25px",marginLeft:4}} />
+                    <WarningAmberIcon sx={{color:"yellow",fontSize:"25px",marginLeft:4}} />
                     </Button>) : 
-                (<div>
+                ((editControlStatus === "UNACCEPTABLE")?(
+                  <Button disabled={true}  sx={{padding:0,marginLeft:"18%"}}>
+                    <CloseIcon sx={{color:"red",fontSize:"25px",marginLeft:4}} />
+                    </Button>
+                ):(<div>
                     <Button onClick={handleApprove} sx={{padding:0,marginLeft:"18%"}}>
                         <DoneIcon sx={{color:"black",fontSize:"25px"}} /></Button>
                     <Button onClick={handleDenied}  sx={{padding:0,marginLeft:"18%"}}>
+                        <WarningAmberIcon sx={{color:"black",fontSize:"25px"}} /></Button>
+                    <Button onClick={handleUnacceptable}  sx={{padding:0,marginLeft:"18%"}}>
                         <CloseIcon sx={{color:"black",fontSize:"25px"}} /></Button>
-                </div>))} 
+                </div>)))} 
             
            
             </div>

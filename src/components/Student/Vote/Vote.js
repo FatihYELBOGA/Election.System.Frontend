@@ -109,7 +109,7 @@ function Vote(props) {
 
   },[userId])
   useEffect(() => {
-    fetch("https://iyte-election.azurewebsites.net/election/"+userId)
+    fetch("https://iyte-election.azurewebsites.net/elections/"+userId)
     .then((res) => {
       if (res.status === 204) {
         // Handle 204 No Content response

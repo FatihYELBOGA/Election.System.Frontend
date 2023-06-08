@@ -3,6 +3,7 @@ import Announcement from "../Announcement/Announcement";
 import './Home.css'
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import { Typography } from "@mui/material";
 
 function Home()
 {
@@ -42,6 +43,7 @@ function Home()
     } else {
         return (
             <div className="container">
+                <Typography sx={{textAlign:"center",marginTop:10}}><h1>ANNOUNCEMENTS</h1> </Typography>
                 <div fixed="true" className="announcement">
                     {postList.map((announcement) => (
                         <Announcement key={announcement.id} announcementId={announcement.id} title={announcement.title} description={announcement.description}></Announcement>

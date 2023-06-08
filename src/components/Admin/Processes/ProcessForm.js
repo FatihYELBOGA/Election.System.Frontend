@@ -29,24 +29,34 @@ function ProcessForm(props){
     
       const handleSubmitProcess = (e) => {
         e.preventDefault();
-        fetch("https://iyte-election.azurewebsites.net/processes", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            processType : process,
-            startDate: startDate+"-"+startTime.replace(":","-")+"-0",
-            endDate: endDate+"-"+endTime.replace(":","-")+"-0",
-            administrationId: userId,
-          }),
-        })
-          .then((res) => res.json())
-          .catch((err) => console.log(err));
-    
-        setStartDate('');
-        setEndDate('');
-        setProcess('');
+        let startControlDate = new Date(startDate+"T"+startTime+":0").getTime();
+        let endControlDate = new Date(endDate+"T"+endTime+":0").getTime();
+        if(startControlDate > endControlDate){
+          alert("Start date cannot be greater than end date!");
+        }else if(process === "" ){
+          alert("Please choose a process type!");
+        }else if(startDate === "" || endDate === ""){
+          alert("Please enter the dates!");
+        }else{
+            fetch("https://iyte-election.azurewebsites.net/processes", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                processType : process,
+                startDate: startDate+"-"+startTime.replace(":","-")+"-0",
+                endDate: endDate+"-"+endTime.replace(":","-")+"-0",
+                administrationId: userId,
+              }),
+            })
+              .then((res) => res.json())
+              .catch((err) => console.log(err));
+        
+            setStartDate('');
+            setEndDate('');
+            setProcess('');
+        }
       };
 
     const refreshProcessNames = () => {

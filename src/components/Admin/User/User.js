@@ -131,7 +131,7 @@ function User(props)
 
     }else{
     return (
-      <Card  id={studentId} sx={{ marginTop: 10,marginBottom: 0,marginRight:5,marginLeft:5,width:"31%",borderRadius:3}}>
+      <Card  id={studentId} sx={{ marginTop: 10,marginBottom: 5,marginRight:5,marginLeft:5,width:"31%",borderRadius:3}}>
         <CardActionArea disableTouchRipple disableRipple sx={{cursor:"default"}} >
           <CardContent>
             <Typography sx={{justifyContent:"center",marginBottom:2}} gutterBottom variant="h5" component="div">

@@ -11,7 +11,7 @@ function Profile(props) {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  if( role ==="STUDENT"){
+  if( role ==="STUDENT" || role === "DEPARTMENT_REPRESENTATIVE"){
     link = "students"
   }else if(role ==="STUDENT_AFFAIR"){
     link = "administrations"
@@ -46,7 +46,7 @@ function Profile(props) {
   }, [userId]);
 
   if(user != null){
-    if(role === "STUDENT"){
+    if(role === "STUDENT" || role === "DEPARTMENT_REPRESENTATIVE"){
     return (
       <div className="profile-container">
         <div className="profile-header">

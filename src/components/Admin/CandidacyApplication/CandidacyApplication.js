@@ -52,39 +52,44 @@ function CandidacyApplication(props)
     }
 
     const handleDetail = (e) =>{
-      e.preventDefault();
-      fetch("https://iyte-election.azurewebsites.net/documents/department-candidacy/"+student.id)
-      .then((res) => {
-        if (res.status === 204) {
-          // Handle 204 No Content response
-          return Promise.resolve(null);
-        } else {
-          return res.json();
-        }
-      })
-        .then(
-          (result) => {
-              setDocuments(result);
-              console.log(result);
-              setIsLoaded(true);
-              var count = 0;
-              documents.forEach((element) => {
-                if(element.controlStatus === "APPROVED" ){
-                    count++;
-                }
-                
-              });
-              
-              setApproveCount(count);    
-          },
-            (error) => {
-                console.log(error);
-            }
-        ) 
     
-    setIsDetailed(true);
+      setIsDetailed(true);
         
-};
+    };
+  useEffect(()=>{
+    
+    fetch("https://iyte-election.azurewebsites.net/documents/department-candidacy/"+student.id)
+    .then((res) => {
+      if (res.status === 204) {
+        // Handle 204 No Content response
+        return Promise.resolve(null);
+      } else {
+        return res.json();
+      }
+    })
+      .then(
+        (result) => {
+            setDocuments(result);
+            console.log(result);
+            
+            var count = 0;
+            documents.forEach((element) => {
+              if(element.controlStatus === "APPROVED" ){
+                  count++;
+              }
+              
+            });
+            
+            setApproveCount(count);
+            setIsLoaded(true);   
+        },
+          (error) => {
+              console.log(error);
+          }
+      ) 
+  },[isDetailed])
+
+ 
 
   const handleAddCandidate = (e) =>{
         e.preventDefault();
@@ -106,14 +111,12 @@ function CandidacyApplication(props)
     
    
     }
-    const handleCloseDetail = (e) =>{
+  const handleCloseDetail = (e) =>{
       setIsDetailed(false);
     }
 
-    const handleCancel = (e) => {
-      e.preventDefault();
-      setIsCandidate(false);
-      
+  const handleCancel = (e) => {
+     
       fetch("https://iyte-election.azurewebsites.net/candidates/"+student.id,{
           method: "DELETE",
           headers: {
@@ -124,10 +127,14 @@ function CandidacyApplication(props)
           }),
         })
         .then((res) => res.json())
+        .then((result) =>{
+          setIsCandidate(false);
+        })
         .catch((err) => {
           // Handle any errors
           console.log(err);
         });
+        
         
     };
 

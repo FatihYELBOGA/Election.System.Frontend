@@ -12,6 +12,8 @@ import ProcessPage from './components/Admin/Processes/ProcessPage';
 import UsersPage from './components/Admin/User/UsersPage';
 import { useState } from 'react';
 import ElectionResult from './components/Student/ElectionResult/ElectionResult';
+import ElectionResults from './components/Admin/ElectionResults/ElectionResults';
+import Operations from './components/Admin/Operations/Operations';
 
 function App() 
 {
@@ -30,7 +32,7 @@ function App()
         
       </BrowserRouter>
     );
-  } else if(role === "STUDENT") {
+  } else if(role === "STUDENT" || role === "DEPARTMENT_REPRESENTATIVE") {
     return (
       <div className="App">
         
@@ -55,9 +57,12 @@ function App()
           <Routes>
             <Route exact path='/announcements' element={<AnnouncementPage userId={userId} />}/>
             <Route exact path='/processes' element={<ProcessPage/>}/>
-            <Route exact path='/candidacy-applications' element={<CandidacyAppPage userId={userId} />}/>
+            <Route exact path='/applications' element={<CandidacyAppPage userId={userId} />}/>
             <Route exact path='/users' element={<UsersPage/>}/>
             <Route exact path='/profile' element={<Profile userId={userId} role={role}/>}/>
+            <Route exact path='/election-results' element={<ElectionResults userId={userId} role={role}/>}/>
+            <Route exact path='/operations' element={<Operations userId={userId} />}/>
+            
           </Routes>
         </BrowserRouter>
       </div>

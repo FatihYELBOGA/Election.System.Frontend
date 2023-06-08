@@ -6,9 +6,10 @@ import "./Candidacy.css"
 import EditIcon from '@mui/icons-material/Edit';
 import Button from '@mui/material/Button';
 import DoneIcon from '@mui/icons-material/Done';
+import CloseIcon from '@mui/icons-material/Close';
 
 function DocumentView(props) {
-  const { userId, document } = props;
+  const { userId, document, isUnacceptable } = props;
   const [fileDisplay, setFileDisplay] = useState(null);
   const [file,setFile] = useState(null);
   const [isEdit,setIsEdit] = useState(false);
@@ -89,7 +90,8 @@ function DocumentView(props) {
               
               (<Button disabled={true} sx={{padding:0,marginLeft:"18%"}}><DoneIcon sx={{color:"green",fontSize:"25px"}} /></Button>):
               
-              (<Button onClick={handleEdit}  sx={{padding:0,marginLeft:"18%"}}><EditIcon sx={{color:"black",fontSize:"25px"}} /></Button>)} 
+              ((isUnacceptable) ? (<Button disabled={true} onClick={handleEdit}  sx={{padding:0,marginLeft:"18%"}}><CloseIcon sx={{color:"black",fontSize:"25px"}} /></Button>) :
+               (<Button onClick={handleEdit}  sx={{padding:0,marginLeft:"18%"}}><EditIcon sx={{color:"black",fontSize:"25px"}} /></Button>))} 
               
              
               </div>

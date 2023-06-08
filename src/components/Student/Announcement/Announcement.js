@@ -13,7 +13,7 @@ function Announcement(props)
     const {announcementId, title, description} = props;
 
     return (
-      <Card className='announcement-card' id={announcementId} sx={{ marginTop: 15}}>
+      <Card className='announcement-card' id={announcementId} sx={{ marginTop: 10}}>
         <CardActionArea disableTouchRipple disableRipple sx={{cursor:"default"}} >
           <CardMedia
             component="img"

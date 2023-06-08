@@ -33,24 +33,33 @@ function Announcement(props) {
 
   const handleSave = (e) => {
     e.preventDefault();
-    fetch("https://iyte-election.azurewebsites.net/announcements/"+announcementId, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id: announcementId,
-        title: editTitle,
-        description: editDescription,
-        startDate: editStartDate,
-        endDate: editEndDate,
-        administrationId: userId,
-      }),
-    })
-      .then((res) => res.json())
-      .catch((err) => console.log(err));
-      setIsEditing(false);
+    let startCompareDate = new Date(startDate).getTime()
+    let FinishCompareDate = new Date(endDate).getTime()
 
+    if(startCompareDate>FinishCompareDate){
+      alert("Start date cannot be greater than end date!")}
+    else if(editTitle === "" || editDescription === ""){
+        alert("Please fill the announcement title and description!")
+    }
+    else{
+        fetch("https://iyte-election.azurewebsites.net/announcements/"+announcementId, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: announcementId,
+            title: editTitle,
+            description: editDescription,
+            startDate: editStartDate,
+            endDate: editEndDate,
+            administrationId: userId,
+          }),
+        })
+          .then((res) => res.json())
+          .catch((err) => console.log(err));
+          setIsEditing(false);
+  }
 
   };
   const handleCancel = (e) =>{

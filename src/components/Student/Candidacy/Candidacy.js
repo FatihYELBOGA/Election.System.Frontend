@@ -22,10 +22,11 @@ function Candidacy(props){
     const [documentCount,setDocumentCount] = useState(0);
     const [documentTypes,setDocumentTypes] = useState([]);
     const [isLoaded, setIsLoaded] = useState(false);
+    const [isUnacceptable,setIsUnacceptable] = useState(false);
+    
+    
 
     const handleProcessesFuture = (e) =>{
-      
-      
         const formData = new FormData();
         formData.append("process", "DEPARTMENT_CANDIDACY");
         
@@ -73,8 +74,14 @@ function Candidacy(props){
 
     useEffect(()=>{
       fetch("https://iyte-election.azurewebsites.net/document-types")
-        .then((res) =>
-            res.json() )
+      .then((res) => {
+        if (res.status === 204) {
+          // Handle 204 No Content response
+          return Promise.resolve(null);
+        } else {
+          return res.json();
+        }
+      })
         .then(
             (result) => {
                 setDocumentTypes(result);
@@ -88,12 +95,24 @@ function Candidacy(props){
 
     useEffect(()=>{
       fetch("https://iyte-election.azurewebsites.net/documents/department-candidacy/"+userId)
-        .then((res) =>
-            res.json() )
+      .then((res) => {
+        if (res.status === 204) {
+          // Handle 204 No Content response
+          return Promise.resolve(null);
+        } else {
+          return res.json();
+        }
+      })
         .then(
             (result) => {
                 setDocuments(result);
                 setIsLoaded(true);
+                result.forEach(element => {
+                  if(element.controlStatus === "UNACCEPTABLE"){
+                    setIsUnacceptable(true);
+                  };
+                  
+                });
             },
             (error) => {
                 console.log(error);
@@ -160,7 +179,7 @@ function Candidacy(props){
        
         {documents.map((document)=>(
             <div style={{display:"block",justifyContent:"center"}}>
-                <DocumentView userId={userId} document={document}></DocumentView>
+                <DocumentView isUnacceptable={isUnacceptable} userId={userId} document={document}></DocumentView>
             </div>
             )
 
@@ -184,8 +203,8 @@ function Candidacy(props){
                     Documents for Departmental Representative Candidacy
                   </Typography>
                   <br />
-                  <Typography variant="body2" color="text.secondary">
-                    In order to be a department candidate, you must upload the following files to the system in zip format.
+                  <Typography variant="body2" color="text.secondary"textAlign="center">
+                    In order to be a department candidate, you must upload the following files to the system in pdf format.
                   </Typography>
                   <br/> 
                   <form>
@@ -194,7 +213,12 @@ function Candidacy(props){
                       <Typography sx={{textAlign:"center"}} variant="body2" color="text.secondary">
                         {document.replace("_"," ")}
                       </Typography>
-                        <Document isSent={isSent} userId={userId} documentCount={documentCount} setDocumentCount={setDocumentCount} documentType={document}></Document>
+                        <Document 
+                          isSent={isSent} 
+                          userId={userId} 
+                          documentCount={documentCount} 
+                          setDocumentCount={setDocumentCount} 
+                          documentType={document}></Document>
                       </div>
                     )
 

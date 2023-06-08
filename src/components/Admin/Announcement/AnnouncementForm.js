@@ -25,6 +25,15 @@ function AnnouncementForm(props) {
 
   const handleSubmitAnnouncement = (e) => {
     e.preventDefault();
+    let startCompareDate = new Date(startDate).getTime()
+    let FinishCompareDate = new Date(endDate).getTime()
+
+    if(startCompareDate>FinishCompareDate){
+      alert("Start date cannot be greater than end date!")
+    }else if(title === "" || description === ""){
+      alert("Please fill the announcement title and description!")
+  }
+    else{
     fetch("https://iyte-election.azurewebsites.net/announcements", {
       method: "POST",
       headers: {
@@ -45,6 +54,7 @@ function AnnouncementForm(props) {
     setEndDate('');
     setTitle('');
     setDescription('');
+  }
   };
 
   return (

@@ -23,11 +23,12 @@ function NavBar(props)
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const {setUserId,role} = props;
+  const [currentMenu,setCurrentMenu] = React.useState("HOME");
   var menuNames = [];
-  if(role === "STUDENT"){
+  if(role === "STUDENT" || role === "DEPARTMENT_REPRESENTATIVE"){
     menuNames = ["HOME","VOTING","CANDIDACY APPLICATION","ELECTION RESULT"]
   }else if(role === "STUDENT_AFFAIR"){
-    menuNames = ["ANNOUNCEMENTS","PROCESSES","CANDIDACY APPLICATIONS","USERS"]
+    menuNames = ["ANNOUNCEMENTS","PROCESSES","APPLICATIONS","USERS","ELECTION RESULTS","OPERATIONS"]
   }
   
   
@@ -131,8 +132,11 @@ function NavBar(props)
             {menuNames.map((menu) =>(
             menu = menu.replace(" ","-"),
             <Button
-              onClick={e => navigate("/"+menu.toLowerCase())}
-              sx={{ my: 2, color: 'white', display: 'block',ml:5 }}
+              onClick={(e) => {
+                navigate("/"+menu.toLowerCase())
+                setCurrentMenu(menu)}}
+              sx={{ my: 2, color: 'white', display: 'block',ml:5 ,backgroundColor: (menu === currentMenu) ? "#9B0F0F":"",padding:2}}
+
             >
               {menu.replace("-"," ")}
             </Button>

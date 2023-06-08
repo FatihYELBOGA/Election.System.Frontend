@@ -12,7 +12,7 @@ function Candidate(props){
     const handleVote = (e) =>{
       e.preventDefault();
     
-      fetch("https://iyte-election.azurewebsites.net/election/vote-for-department-representative", {
+      fetch("https://iyte-election.azurewebsites.net/elections/vote-for-department-representative", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

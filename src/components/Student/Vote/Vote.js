@@ -129,8 +129,7 @@ function Vote(props) {
         
       },
       (error) => {
-        console.log(error);
-       
+        console.log(error); 
       }
     );
   }, [userId]);
@@ -185,13 +184,29 @@ function Vote(props) {
       </Box>
     );
   } else if(isActive && isLoaded) {
+    if(departmentCandidateList == 0){
+      return(
+      <div style={{display:"flex",justifyContent:"center",textAlign:"center"}}>
+        <Card className='' sx={{display:"flex", marginTop: 15,borderRadius:5,width:"50%"}}>
+      <CardActionArea disableTouchRipple disableRipple sx={{cursor:"default"}} >
+        <CardContent>
+         <Typography>There is no candidates at the moment</Typography>
+         
+        </CardContent>
+      </CardActionArea>
+    </Card>
+
+      </div>
+      
+      );
+    }else{
     return (
         <div className="" style={{display:"flex !important",justifyContent:"center !important"}}>
             
-            
+            <div>{departmentCandidateList.length}</div>
           <div fixed="true" className="announcement">
             {departmentCandidateList.map((candidate) => (
-              <Candidate type="voting" voteId={voteId} student={candidate} setVoteId={setVoteId} userId={userId}/>
+              <Candidate key={candidate.id} type="voting" voteId={voteId} student={candidate} setVoteId={setVoteId} userId={userId}/>
             ))}
           </div>
           
@@ -199,6 +214,7 @@ function Vote(props) {
         </div>
         
     );
+            }
   }else if(!isActive && isFuture){
     return(
     <div className='container'>
@@ -230,6 +246,7 @@ function Vote(props) {
     );
 
   }
+  
   else{
       return(
         <Card className='candidacy-card' sx={{ marginTop: 15,borderRadius:5}}>

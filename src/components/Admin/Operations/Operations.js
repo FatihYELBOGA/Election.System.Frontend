@@ -13,7 +13,9 @@ function Operations(props) {
           
         })
         .then((res) => res.json())
-        .then((result) =>{console.log(result)})
+        .then((result) =>{
+          alert("Candidates have been deleted")
+        })
         .catch((err) => {
           // Handle any errors
           console.log(err);
@@ -25,7 +27,9 @@ function Operations(props) {
           method: "DELETE",
         })
         .then((res) => res.json())
-        .then((result) =>{console.log(result)})
+        .then((result) =>{
+          alert("Election results have been deleted")
+        })
         .catch((err) => {
           // Handle any errors
           console.log(err);
@@ -38,7 +42,9 @@ function Operations(props) {
           method: "DELETE",
         })
         .then((res) => res.json())
-        .then((result) =>{console.log(result)})
+        .then((result) =>{
+          alert("Documents have been deleted");
+          })
         .catch((err) => {
           // Handle any errors
           console.log(err);

@@ -93,19 +93,20 @@ function NavBar(props)
               sx={{
                 display: { xs: 'block', md: 'none' }, 
               }}
+            > 
+            {menuNames.map((menu) =>(
+            menu = menu.replace(" ","-"),
+            <MenuItem
+              id='menu'
+              onClick={(e) => {
+                navigate("/"+menu.toLowerCase())
+                setCurrentMenu(menu)}}
             >
-              <MenuItem onClick={handleCloseNavMenu} >
-                <Typography textAlign="center">Home</Typography>
-              </MenuItem>
-              <MenuItem onClick={handleCloseNavMenu} >
-                <Typography textAlign="center">Voting</Typography>
-              </MenuItem>
-              <MenuItem onClick={handleCloseNavMenu} >
-                <Typography textAlign="center">Candidacy Application</Typography>
-              </MenuItem>
-              <MenuItem onClick={handleCloseNavMenu} >
-                <Typography textAlign="center">Election Result</Typography>
-              </MenuItem>  
+             <Typography textAlign="center">{menu.replace("-"," ")}</Typography> 
+            </MenuItem>
+
+            ))}
+              
             </Menu>
           </Box>
 
@@ -132,6 +133,7 @@ function NavBar(props)
             {menuNames.map((menu) =>(
             menu = menu.replace(" ","-"),
             <Button
+              id='menu'
               onClick={(e) => {
                 navigate("/"+menu.toLowerCase())
                 setCurrentMenu(menu)}}

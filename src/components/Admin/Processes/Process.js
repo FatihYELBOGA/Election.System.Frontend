@@ -35,14 +35,15 @@ function Process(props){
     
     const handleSave = (e) => {
         e.preventDefault();
-        let startControlDate = new Date(editStartDate+"T"+editStartTime+":0").getTime();
-        let endControlDate = new Date(editEndDate+"T"+editEndTime+":0").getTime();
+        let startControlDate = new Date(editStartDate+"T"+editStartTime+":00").getTime();
+        let endControlDate = new Date(editEndDate+"T"+editEndTime+":00").getTime();
+        console.log(editStartDate+"T"+editStartTime+":0")
+        console.log(startControlDate)
+        console.log(endControlDate)
         if(startControlDate > endControlDate){
           alert("Start date cannot be greater than end date!")
         }else if(editProcess === ""){
           alert("Please choose a Process type!")
-        }else if(startDate === "" || endDate === ""){
-          alert("Please enter the dates!");
         }
         else{
 
@@ -57,8 +58,18 @@ function Process(props){
             endDate: editEndDate+"-"+editEndTime.replace(":","-")+"-0",
             administratonId: userId,
           }),
+        }).then((res) => {
+          if (res.status === 204) {
+            // Handle 204 No Content response
+            alert("Please select a different type of process");
+            return Promise.resolve(null);
+            
+          } else {
+            return res.json();
+          }
+        }).then((result) => {
+          console.log(result)
         })
-          .then((res) => res.json())
           .catch((err) => console.log(err));
           setIsEditing(false);
       }

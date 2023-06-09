@@ -90,8 +90,9 @@ function Candidate(props){
               <p style={{margin:0,marginTop:5,fontSize:50}}>{numberOfVotes}</p>
               </div>
 
-                ) : (<div>
-                  VOTE
+                ) : (<div style={{fontSize:25,color:"#B61815"}}>
+                  Number of Votes
+                  <p style={{margin:0,marginTop:5,fontSize:50}}>-</p>
                   </div>)}
                
             </CardContent>

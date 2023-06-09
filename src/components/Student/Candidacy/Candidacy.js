@@ -214,6 +214,7 @@ function Candidacy(props){
                         {document.replace("_"," ")}
                       </Typography>
                         <Document 
+                          
                           isSent={isSent} 
                           userId={userId} 
                           documentCount={documentCount} 

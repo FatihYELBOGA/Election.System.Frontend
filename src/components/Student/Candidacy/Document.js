@@ -15,12 +15,19 @@ function Document(props){
     const handleFile = (e) => {
       const selectedFile = e.target.files[0];
       if (selectedFile) {
-        setFile(selectedFile);
-        if (file === "") {
-          setDocumentCount(documentCount + 1);
+        // Check file size
+        const fileSizeLimit = 5 * 1024 * 1024; // 5MB in bytes
+        if (selectedFile.size <= fileSizeLimit) {
+          setFile(selectedFile);
+          
+          if (file === "") {
+            setDocumentCount(documentCount + 1);
+          }
+        } else {
+          // File size exceeds the limit
+          alert("File size exceeds the limit of 5MB.");
         }
       }
-      
     };
 
     const  handleApply = ()=>{
@@ -56,8 +63,17 @@ function Document(props){
               <CardActionArea disableTouchRipple disableRipple sx={{cursor:"default",justifyContent:"center"}} >
                 <CardContent>
                   <div style={{textAlign:"center"}}>
-                  <span>Choose a file: </span>
-                      <input required onChange={handleFile} disabled={false} type="file" name="archive" accept=".pdf" />
+                  
+                      <input 
+                        required 
+                        onChange={handleFile} 
+                        disabled={false} 
+                        type="file" 
+                        name="archive" 
+                        accept=".pdf" 
+                        style={{color:"white",margin:0,width:"40%",marginLeft:"10%"}}/>
+                        <p>{(file === "" ) ? "Choose a file":file.name }</p>
+                      
                   </div>
                 </CardContent>
               </CardActionArea>

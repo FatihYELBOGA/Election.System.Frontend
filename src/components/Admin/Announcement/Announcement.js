@@ -33,10 +33,11 @@ function Announcement(props) {
 
   const handleSave = (e) => {
     e.preventDefault();
-    let startCompareDate = new Date(startDate).getTime()
-    let FinishCompareDate = new Date(endDate).getTime()
-
-    if(startCompareDate>FinishCompareDate){
+    let startCompareDate = new Date(editStartDate).getTime()
+    let finishCompareDate = new Date(editEndDate).getTime()
+    console.log(startCompareDate)
+    console.log(finishCompareDate)
+    if(startCompareDate > finishCompareDate){
       alert("Start date cannot be greater than end date!")}
     else if(editTitle === "" || editDescription === ""){
         alert("Please fill the announcement title and description!")

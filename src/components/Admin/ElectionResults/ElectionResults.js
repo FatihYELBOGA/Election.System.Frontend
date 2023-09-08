@@ -190,7 +190,8 @@ function ElectionResults(props) {
               
                   <Typography sx={{textAlign:"center",marginTop:10}}><h1>DEPARTMENT REPRESENTATIVE</h1> </Typography>
                   <div style={{display:"flex",textAlign:"center",justifyContent:"center",marginTop:20,width:"100%"}}>
-                  <Autocomplete
+            <Autocomplete
+                    
                     disablePortal
                     onChange={(e,value) => setDepartment(value)}
                     id="combo-box-demo"
